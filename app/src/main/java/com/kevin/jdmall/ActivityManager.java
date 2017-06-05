@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Function:
  *
- * @FileName: com.kevin.jdmall.ActivityManager.java
+ * @FileName: com.kevin.jdmall.ActivityManager.java   
  * @author: zk
  * @date: 2017-03-15 22:15
  */
@@ -34,9 +34,11 @@ public class ActivityManager {
     }
 
     public static void startActivity(Context context,Class<? extends Activity> clazz,boolean isFinishSelf){
+
         Intent intent = new Intent(context,clazz);
         context.startActivity(intent);
         if (isFinishSelf)
             ((Activity)context).finish();
+
     }
 }
