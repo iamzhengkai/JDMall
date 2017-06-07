@@ -32,8 +32,8 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    protected void setLayoutRes() {
-        mLayoutId = R.layout.activity_main;
+    protected int getLayoutId() {
+        return R.layout.activity_main;
     }
 
     private void initTabHost() {

@@ -41,8 +41,8 @@ public class RegisterActivity extends BaseActivity implements IRegisterView {
     }
 
     @Override
-    protected void setLayoutRes() {
-        mLayoutId = R.layout.activity_regist;
+    protected int getLayoutId() {
+        return R.layout.activity_regist;
     }
 
     @Override

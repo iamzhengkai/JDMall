@@ -31,7 +31,7 @@ public class SplashActivity extends BaseActivity {
             @Override
             public void onAnimationEnd(Animation animation) {
                 ActivityManager.startActivity(SplashActivity.this,LoginActivity.class,true);
-                finish();
+//                finish();
             }
 
             @Override
@@ -43,7 +43,7 @@ public class SplashActivity extends BaseActivity {
     }
 
     @Override
-    protected void setLayoutRes() {
-        mLayoutId = R.layout.activity_splash;
+    protected int getLayoutId() {
+        return R.layout.activity_splash;
     }
 }

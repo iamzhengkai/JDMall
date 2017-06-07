@@ -12,7 +12,7 @@ public class ResetPwdActivity extends BaseActivity {
     }
 
     @Override
-    protected void setLayoutRes() {
-        mLayoutId = R.layout.activity_reset;
+    protected int getLayoutId() {
+        return R.layout.activity_reset;
     }
 }

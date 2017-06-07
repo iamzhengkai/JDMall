@@ -38,20 +38,20 @@ public class LoginActivity extends BaseActivity implements ILoginView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //初始化Presenter
         mPresenter = new LoginPresenterImpl(this);
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setTitle("登录");
         mProgressDialog.setMessage("登陆中...");
-
-
-
     }
+
     @OnClick(R.id.login_btn)
     public void onLoginBtnClick(){
         mUsername = mNameEt.getText().toString();
         mPassword = mPwdEt.getText().toString();
         Logger.d(TAG,"username"+ mUsername);
         Logger.d(TAG,"pwd"+ mPassword);
+        //调用Presenter进行业务处理
         if (mPresenter.vertifyLoginInfo(mUsername,mPassword)){
             mPresenter.login(mUsername,mPassword);
         }
@@ -69,10 +69,11 @@ public class LoginActivity extends BaseActivity implements ILoginView {
     }
 
     @Override
-    protected void setLayoutRes() {
-        mLayoutId = R.layout.activity_login;
+    protected int getLayoutId() {
+        return R.layout.activity_login;
     }
 
+    //实现View中对应的接口
     @Override
     public void showProgressDialog() {
         mProgressDialog.show();

@@ -10,6 +10,8 @@ import com.kevin.jdmall.iview.ILoginView;
 import com.kevin.jdmall.presenter.ILoginPresenter;
 import com.orhanobut.logger.Logger;
 
+import java.lang.ref.WeakReference;
+
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -21,18 +23,27 @@ import rx.schedulers.Schedulers;
 public class LoginPresenterImpl extends BasePresenterImpl implements ILoginPresenter {
 
     private static final String TAG = "LoginPresenterImpl";
-    private ILoginView mLoginView;
+//    private ILoginView mLoginView;
+    private WeakReference<ILoginView> mLoginViewRef;
 
     public LoginPresenterImpl(ILoginView loginView) {
         if (loginView==null)
             throw new IllegalArgumentException("ILoginView must not be null");
-        this.mLoginView = loginView;
+
+
+        this.mLoginViewRef = new WeakReference<ILoginView>(loginView);
+//        this.mLoginView = loginView;
     }
 
     @Override
     public void login(String username,String password) {
-        mLoginView.showProgressDialog();
+        if ((mLoginViewRef.get()) != null){
+            mLoginViewRef.get().showProgressDialog();}
 
+        else {
+            Logger.e("LoginActivity已被回收");
+            return;
+        }
         Subscription s =  MyApplication.mRetrofit.create(LoginApi.class).login(username,password)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -43,26 +54,33 @@ public class LoginPresenterImpl extends BasePresenterImpl implements ILoginPrese
 
                     @Override
                     public void onError(Throwable e) {
-                        mLoginView.hideProgressDialog();
+                        if (mLoginViewRef.get() != null){
+                            mLoginViewRef.get().hideProgressDialog();
+                            mLoginViewRef.get().showError(e.getMessage());
+                        }else {
+                            Logger.e("LoginActivity已被回收");
+                        }
                         e.printStackTrace();
-                        mLoginView.showError(e.getMessage());
                     }
 
                     @Override
                     public void onNext(LoginResult loginResult) {
-                        mLoginView.hideProgressDialog();
-                        if (loginResult.isSuccess()){
-                            mLoginView.showError("登录成功!");
-                            if (BuildConfig.DEBUG){
-                                Logger.d(TAG,loginResult.toString());
+                        if (mLoginViewRef.get() != null) {
+                            mLoginViewRef.get().hideProgressDialog();
+                            if (loginResult.isSuccess()) {
+                                mLoginViewRef.get().showError("登录成功!");
+                                if (BuildConfig.DEBUG) {
+                                    Logger.d(TAG, loginResult.toString());
+                                }
+                                //跳转到主界面
+                                mLoginViewRef.get().jumpToMainActivity();
+
+                            } else {
+                                mLoginViewRef.get().showError(loginResult.getErrorMsg());
                             }
-                            //跳转到主界面
-                            mLoginView.jumpToMainActivity();
-
-                        }else{
-                            mLoginView.showError(loginResult.getErrorMsg());
+                        }else {
+                            Logger.e("LoginActivity已被回收");
                         }
-
                     }
                 });
         addSubscription(s);
@@ -71,7 +89,11 @@ public class LoginPresenterImpl extends BasePresenterImpl implements ILoginPrese
     @Override
     public boolean vertifyLoginInfo(String username,String password) {
         if (TextUtils.isEmpty(username) || TextUtils.isEmpty(password)){
-            mLoginView.showError("用户名或密码不能为空！");
+            if (mLoginViewRef.get() != null){
+                mLoginViewRef.get().showError("用户名或密码不能为空！");
+            }else {
+                Logger.e("LoginActivity已被回收");
+            }
             return false;
         }
         return true;

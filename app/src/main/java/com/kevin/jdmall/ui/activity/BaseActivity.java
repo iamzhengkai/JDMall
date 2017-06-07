@@ -31,7 +31,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (null != actionBar)
             actionBar.hide();
         //设置布局
-        setLayoutRes();
+        mLayoutId = getLayoutId();
         setContentView(mLayoutId);
         StatusBarUtil.setColor(this, getResources().getColor(R.color.colorPrimaryDark));
         ButterKnife.bind(this);
@@ -42,5 +42,5 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onDestroy();
         ActivityManager.removeActivity(this);
     }
-    protected abstract void setLayoutRes();
+    protected abstract int getLayoutId();
 }

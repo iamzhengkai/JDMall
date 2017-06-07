@@ -36,7 +36,7 @@ public class ActivityManager {
     public static void startActivity(Context context,Class<? extends Activity> clazz,boolean isFinishSelf){
         Intent intent = new Intent(context,clazz);
         context.startActivity(intent);
-        if (isFinishSelf)
+        if (isFinishSelf && context instanceof Activity)
             ((Activity)context).finish();
     }
 }
