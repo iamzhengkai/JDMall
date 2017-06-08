@@ -1,5 +1,5 @@
 package com.kevin.jdmall.presenter;
 
-public interface BasePresenter {
+public interface IBasePresenter {
     void unsubcrible();
 }

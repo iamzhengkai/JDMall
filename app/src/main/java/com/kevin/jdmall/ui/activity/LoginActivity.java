@@ -10,6 +10,7 @@ import com.kevin.jdmall.ActivityManager;
 import com.kevin.jdmall.R;
 import com.kevin.jdmall.iview.ILoginView;
 import com.kevin.jdmall.presenter.ILoginPresenter;
+import com.kevin.jdmall.presenter.impl.BasePresenterImpl;
 import com.kevin.jdmall.presenter.impl.LoginPresenterImpl;
 import com.kevin.jdmall.utils.ToastUtil;
 import com.orhanobut.logger.Logger;
@@ -17,7 +18,7 @@ import com.orhanobut.logger.Logger;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class LoginActivity extends BaseActivity implements ILoginView {
+public class LoginActivity extends BasePresenterActivity implements ILoginView {
 
     @BindView(R.id.title_v)
     TextView mTitleV;
@@ -29,16 +30,11 @@ public class LoginActivity extends BaseActivity implements ILoginView {
     Button mLoginBtn;
 
     private ProgressDialog mProgressDialog;
-    ILoginPresenter mPresenter;
-    private String mUsername;
-    private String mPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //初始化Presenter
-        mPresenter = new LoginPresenterImpl(this);
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setTitle("登录");
         mProgressDialog.setMessage("登陆中...");
@@ -46,13 +42,13 @@ public class LoginActivity extends BaseActivity implements ILoginView {
 
     @OnClick(R.id.login_btn)
     public void onLoginBtnClick(){
-        mUsername = mNameEt.getText().toString();
-        mPassword = mPwdEt.getText().toString();
-        Logger.d(TAG,"username"+ mUsername);
-        Logger.d(TAG,"pwd"+ mPassword);
+        String username = mNameEt.getText().toString();
+        String password = mPwdEt.getText().toString();
+        Logger.d(TAG,"username"+ username);
+        Logger.d(TAG,"pwd"+ password);
         //调用Presenter进行业务处理
-        if (mPresenter.vertifyLoginInfo(mUsername,mPassword)){
-            mPresenter.login(mUsername,mPassword);
+        if (((LoginPresenterImpl)mPresenter).vertifyLoginInfo(username, password)){
+            ((LoginPresenterImpl)mPresenter).login(username, password);
         }
     }
 
@@ -95,8 +91,7 @@ public class LoginActivity extends BaseActivity implements ILoginView {
 
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mPresenter.unsubcrible();
+    protected BasePresenterImpl initPresenter() {
+        return new LoginPresenterImpl(this);
     }
 }

@@ -8,13 +8,14 @@ import android.widget.EditText;
 
 import com.kevin.jdmall.R;
 import com.kevin.jdmall.iview.IResetView;
+import com.kevin.jdmall.presenter.impl.BasePresenterImpl;
 import com.kevin.jdmall.presenter.impl.ResetPresenterImpl;
 import com.kevin.jdmall.utils.ToastUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class ResetActivity extends BaseActivity implements IResetView {
+public class ResetActivity extends BasePresenterActivity implements IResetView {
 
     @BindView(R.id.username_et)
     EditText mUsernameEt;
@@ -22,17 +23,14 @@ public class ResetActivity extends BaseActivity implements IResetView {
     Button mBtReset;
 
     private ProgressDialog mProgressDialog;
-    private ResetPresenterImpl mResetPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mResetPresenter = new ResetPresenterImpl(this);
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setTitle("密码重置");
         mProgressDialog.setMessage("密码重置中...");
-
     }
 
     @Override
@@ -63,14 +61,13 @@ public class ResetActivity extends BaseActivity implements IResetView {
     @OnClick(R.id.bt_reset)
     public void onViewClicked(View view) {
         String username = mUsernameEt.getText().toString();
-        if(mResetPresenter.vertifyResetInfo(username)){
-            mResetPresenter.reset(username);
+        if(((ResetPresenterImpl)mPresenter).vertifyResetInfo(username)){
+            ((ResetPresenterImpl)mPresenter).reset(username);
         }
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mResetPresenter.unsubcrible();
+    protected BasePresenterImpl initPresenter() {
+        return  new ResetPresenterImpl(this);
     }
 }

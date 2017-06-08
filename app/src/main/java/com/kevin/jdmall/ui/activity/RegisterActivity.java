@@ -8,15 +8,14 @@ import android.widget.TextView;
 
 import com.kevin.jdmall.R;
 import com.kevin.jdmall.iview.IRegisterView;
+import com.kevin.jdmall.presenter.impl.BasePresenterImpl;
 import com.kevin.jdmall.presenter.impl.RegisterPresenterImpl;
 import com.kevin.jdmall.utils.ToastUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class RegisterActivity extends BaseActivity implements IRegisterView {
-    ProgressDialog mProgressDialog;
-    RegisterPresenterImpl mPresenter;
+public class RegisterActivity extends BasePresenterActivity implements IRegisterView {
     @BindView(R.id.title_v)
     TextView mTitleV;
     @BindView(R.id.username_et)
@@ -28,6 +27,8 @@ public class RegisterActivity extends BaseActivity implements IRegisterView {
     @BindView(R.id.cb_agree)
     CheckBox mCbAgree;
 
+    ProgressDialog mProgressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,9 +36,6 @@ public class RegisterActivity extends BaseActivity implements IRegisterView {
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setTitle("注册");
         mProgressDialog.setMessage("注册中...");
-
-        mPresenter = new RegisterPresenterImpl(this);
-
     }
 
     @Override
@@ -75,15 +73,14 @@ public class RegisterActivity extends BaseActivity implements IRegisterView {
             ToastUtil.showToast("请同意用户协议！");
             return;
         }
-        if(mPresenter.vertifyRegisterInfo(username,password,repassword)){
-            mPresenter.register(username,password);
+        if(((RegisterPresenterImpl)mPresenter).vertifyRegisterInfo(username,password,repassword)){
+            ((RegisterPresenterImpl)mPresenter).register(username,password);
         }
 
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mPresenter.unsubcrible();
+    protected BasePresenterImpl initPresenter() {
+        return new RegisterPresenterImpl(this);
     }
 }

@@ -1,5 +1,6 @@
 package com.kevin.jdmall.ui.activity;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -9,6 +10,10 @@ import android.widget.TextView;
 
 import com.kevin.jdmall.R;
 import com.kevin.jdmall.bean.Tab;
+import com.kevin.jdmall.ui.fragment.CartFragment;
+import com.kevin.jdmall.ui.fragment.CategoryFragment;
+import com.kevin.jdmall.ui.fragment.HomeFragment;
+import com.kevin.jdmall.ui.fragment.MineFragment;
 import com.kevin.jdmall.ui.view.FragmentTabHost;
 
 import java.util.ArrayList;
@@ -16,19 +21,28 @@ import java.util.ArrayList;
 import butterknife.BindView;
 
 public class MainActivity extends BaseActivity {
+
     @BindView(android.R.id.tabcontent)
     FrameLayout mTabcontent;
     @BindView(android.R.id.tabhost)
     FragmentTabHost mTabhost;
 
+
+
     private ArrayList<Tab> mTabs = new ArrayList<>();
     private Class[] fragments = new Class[]{
-
+            HomeFragment.class,
+            CategoryFragment.class,
+            CartFragment.class,
+            MineFragment.class
     };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        initTabs();
+        initTabHost();
     }
 
     @Override
@@ -63,12 +77,5 @@ public class MainActivity extends BaseActivity {
         imageView.setImageResource(tab.resId);
         textView.setText(tab.title);
         return view;
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        //TODO
-        //mPresenter.unsubscribe();
     }
 }
