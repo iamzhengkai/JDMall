@@ -58,7 +58,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="5dp"
-        android:onClick="resetClick"
+        android:id="@+id/bt_reset"
         android:text="下一步"
         android:textSize="18sp"
         android:textStyle="bold"
