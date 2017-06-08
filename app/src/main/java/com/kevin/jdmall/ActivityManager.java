@@ -23,6 +23,7 @@ public class ActivityManager {
     public static void removeActivity(Activity activity){
         activities.remove(activity);
     }
+
     public static void finishAll(){
 
         for (Activity activity : activities){

@@ -24,7 +24,8 @@
             android:name=".ui.activity.LoginActivity"
             android:launchMode="singleTop">
         </activity>
-        <activity android:name=".ui.activity.MainActivity">
+        <activity android:name=".ui.activity.MainActivity"
+            android:launchMode="singleTask">
         </activity>
         <activity android:name=".ui.activity.RegisterActivity">
         </activity>
