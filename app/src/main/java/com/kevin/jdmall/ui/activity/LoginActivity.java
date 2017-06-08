@@ -38,6 +38,8 @@ public class LoginActivity extends BasePresenterActivity implements ILoginView {
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setTitle("登录");
         mProgressDialog.setMessage("登陆中...");
+
+        ((LoginPresenterImpl)mPresenter).readUserFromDb();
     }
 
     @OnClick(R.id.login_btn)
@@ -86,7 +88,13 @@ public class LoginActivity extends BasePresenterActivity implements ILoginView {
 
     @Override
     public void jumpToMainActivity() {
-        ActivityManager.startActivity(this,MainActivity.class,false);
+        ActivityManager.startActivity(this,MainActivity.class,true);
+    }
+
+    @Override
+    public void setUserInfo(String username, String pwd) {
+        mNameEt.setText(username);
+        mPwdEt.setText(pwd);
     }
 
 

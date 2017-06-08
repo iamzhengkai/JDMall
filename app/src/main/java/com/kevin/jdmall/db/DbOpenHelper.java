@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.kevin.jdmall.MyApplication;
 import com.kevin.jdmall.MyConstants;
+import com.orhanobut.logger.Logger;
 
 /**
  * Created by Administrator on 2017/6/8.
@@ -20,9 +21,12 @@ public class DbOpenHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         String createTbl = "create table " + MyConstants.DbConstants.TBL_NAME + "(" +
-                MyConstants.DbConstants.CLM_ID + " integer primary key autoincrement," +
-                MyConstants.DbConstants.CLM_USERNAME + "text," +
-                MyConstants.DbConstants.CLM_PWD + "text);";
+                MyConstants.DbConstants.CLM_ID + " integer primary key," +
+                MyConstants.DbConstants.CLM_USERNAME + " text," +
+                MyConstants.DbConstants.CLM_PWD + " text);";
+
+        Logger.e(createTbl);
+
         sqLiteDatabase.execSQL(createTbl);
     }
 

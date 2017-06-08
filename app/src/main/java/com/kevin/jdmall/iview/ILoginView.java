@@ -9,4 +9,5 @@ public interface ILoginView {
     void hideProgressDialog();
     void showError(String errorMsg);
     void jumpToMainActivity();
+    void setUserInfo(String username,String pwd);
 }

@@ -13,7 +13,7 @@ public class ToastUtil {
 	public static void showToast(String text){
 		
 		if(toast==null){
-			toast = Toast.makeText(MyApplication.getContext(), text,Toast.LENGTH_SHORT);
+			toast = Toast.makeText(MyApplication.mContext, text,Toast.LENGTH_SHORT);
 		}else {
 			toast.setText(text);//如果不为空，则直接改变当前toast的文本
 		}

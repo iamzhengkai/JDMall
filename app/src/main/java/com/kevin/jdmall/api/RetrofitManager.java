@@ -58,14 +58,14 @@ public class RetrofitManager {
                     return chain.proceed(request);
                 }
                 //没网强制从缓存读取(必须得写，不然断网状态下，退出应用，或者等待一分钟后，就获取不到缓存）
-                if (!NetWorkUtil.isNetWorkAvailable(MyApplication.getContext())) {
+                if (!NetWorkUtil.isNetWorkAvailable(MyApplication.mContext)) {
                     request = request.newBuilder()
                             .cacheControl(CacheControl.FORCE_CACHE)
                             .build();
                 }
 
                 Response originalResponse = chain.proceed(request);
-                if (NetWorkUtil.isNetWorkAvailable(MyApplication.getContext())) {
+                if (NetWorkUtil.isNetWorkAvailable(MyApplication.mContext)) {
                     //int maxAge = 60; // 在线缓存在1分钟内可读取
                     return originalResponse.newBuilder()
                             .removeHeader("Pragma")
@@ -84,7 +84,7 @@ public class RetrofitManager {
         };
         logging = new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC);
         loggingInterceptor = new LoggingInterceptor();
-        httpCacheDirectory = new File(MyApplication.getContext().getCacheDir(), mCacheFileName);
+        httpCacheDirectory = new File(MyApplication.mContext.getCacheDir(), mCacheFileName);
         cache = new Cache(httpCacheDirectory, mCacheSize);
         client = new OkHttpClient.Builder()
                 .addNetworkInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR)
