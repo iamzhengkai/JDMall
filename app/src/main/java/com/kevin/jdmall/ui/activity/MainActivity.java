@@ -64,4 +64,11 @@ public class MainActivity extends BaseActivity {
         textView.setText(tab.title);
         return view;
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //TODO
+        //mPresenter.unsubscribe();
+    }
 }

@@ -1,6 +1,5 @@
 package com.kevin.jdmall.ui.activity;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.widget.Button;
@@ -29,7 +28,7 @@ public class LoginActivity extends BaseActivity implements ILoginView {
     @BindView(R.id.login_btn)
     Button mLoginBtn;
 
-    ProgressDialog mProgressDialog;
+    private ProgressDialog mProgressDialog;
     ILoginPresenter mPresenter;
     private String mUsername;
     private String mPassword;
@@ -65,7 +64,7 @@ public class LoginActivity extends BaseActivity implements ILoginView {
     @OnClick(R.id.bt_reset_pwd)
     public void onResetPwdBtnClick(){
         ToastUtil.showToast("重置");
-        ActivityManager.startActivity(this,ResetPwdActivity.class,false);
+        ActivityManager.startActivity(this,ResetActivity.class,false);
     }
 
     @Override

@@ -80,4 +80,10 @@ public class RegisterActivity extends BaseActivity implements IRegisterView {
         }
 
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mPresenter.unsubcrible();
+    }
 }
