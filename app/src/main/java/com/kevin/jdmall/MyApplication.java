@@ -18,7 +18,7 @@ import retrofit2.Retrofit;
  */
 
 public class MyApplication extends Application {
-    private static Context mContext;
+    public static Context mContext;
     public static Retrofit mRetrofit;
     public static RefWatcher mRefWatcher;
 
@@ -36,7 +36,4 @@ public class MyApplication extends Application {
         mRetrofit = new RetrofitManager.Builder().build().getRetrofitClient(MyConstants.BASE_URL);
     }
 
-    public static Context getContext() {
-        return mContext;
-    }
 }

@@ -8,6 +8,16 @@ package com.kevin.jdmall;
  * @date: 2017-03-16 00:37
  */
 
-public class MyConstants {
-    public static final String BASE_URL  = "http://mall.520it.com";
+public interface MyConstants {
+    String BASE_URL = "http://mall.520it.com";
+
+    interface DbConstants {
+        String DB_NAME = "jdmall.db";
+        int DB_VERSION = 1;
+        String TBL_NAME = "user";
+        String CLM_ID = "_id";
+        String CLM_USERNAME = "username";
+        String CLM_PWD = "pwd";
+    }
+
 }
