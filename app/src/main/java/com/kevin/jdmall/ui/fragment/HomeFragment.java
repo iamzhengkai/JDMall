@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.kevin.jdmall.presenter.impl.BasePresenterImpl;
+
 /**
  * Created by Administrator on 2017/6/8.
  */
@@ -16,5 +18,10 @@ public class HomeFragment extends BasePresenterFragment {
         TextView view = new TextView(getActivity());
         view.setText("首页");
         return view;
+    }
+
+    @Override
+    protected BasePresenterImpl initPresenter() {
+        return null;
     }
 }

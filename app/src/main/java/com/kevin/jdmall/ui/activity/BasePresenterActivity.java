@@ -20,7 +20,8 @@ public abstract class BasePresenterActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mPresenter.unsubcrible();
+        if (mPresenter != null)
+            mPresenter.unsubcrible();
     }
 
     protected abstract BasePresenterImpl initPresenter();

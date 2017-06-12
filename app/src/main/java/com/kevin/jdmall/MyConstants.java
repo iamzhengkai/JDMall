@@ -11,6 +11,7 @@ package com.kevin.jdmall;
 public interface MyConstants {
     String BASE_URL = "http://mall.520it.com";
 
+    String PREF_USER_INFO = "user_info";
     interface DbConstants {
         String DB_NAME = "jdmall.db";
         int DB_VERSION = 1;

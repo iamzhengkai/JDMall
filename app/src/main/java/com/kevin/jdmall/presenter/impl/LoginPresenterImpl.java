@@ -3,12 +3,15 @@ package com.kevin.jdmall.presenter.impl;
 import android.text.TextUtils;
 
 import com.kevin.jdmall.MyApplication;
+import com.kevin.jdmall.MyConstants;
 import com.kevin.jdmall.api.LoginApi;
 import com.kevin.jdmall.bean.LoginResult;
 import com.kevin.jdmall.bean.User;
 import com.kevin.jdmall.db.UserDao;
 import com.kevin.jdmall.iview.ILoginView;
 import com.kevin.jdmall.presenter.ILoginPresenter;
+import com.kevin.jdmall.utils.JsonUtil;
+import com.kevin.jdmall.utils.PrefUtils;
 import com.orhanobut.logger.Logger;
 
 import java.lang.ref.WeakReference;
@@ -37,7 +40,8 @@ public class LoginPresenterImpl extends BasePresenterImpl implements ILoginPrese
     @Override
     public void login(final String username, final String password) {
         mLoginViewRef.get().showProgressDialog();
-        Subscription sLogin = MyApplication.mRetrofit.create(LoginApi.class).login(username, password)
+        Subscription sLogin = MyApplication.mRetrofit.create(LoginApi.class).login(username,
+                password)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<LoginResult>() {
@@ -69,7 +73,7 @@ public class LoginPresenterImpl extends BasePresenterImpl implements ILoginPrese
 //                          mLoginViewRef.get().showError("登录成功!");
                             Logger.d(TAG, loginResult.toString());
                             //保存用户信息
-                            saveUserInfo(username, password);
+                            saveUserInfo(username, password, loginResult);
 
                         } else {
                             loginView.showError(loginResult.getErrorMsg());
@@ -80,7 +84,8 @@ public class LoginPresenterImpl extends BasePresenterImpl implements ILoginPrese
         addSubscription(sLogin);
     }
 
-    private void saveUserInfo(final String username, final String password) {
+    private void saveUserInfo(final String username, final String password, final LoginResult
+            loginResult) {
         /*DbOpenHelper mHelper = new DbOpenHelper();
         SqlBrite mSqlBrite = new SqlBrite.Builder().build();
         BriteDatabase db = mSqlBrite.wrapDatabaseHelper(mHelper, Schedulers.io());
@@ -111,17 +116,31 @@ public class LoginPresenterImpl extends BasePresenterImpl implements ILoginPrese
 
         //保存用户信息
         Subscription sSaveUser = Observable.create(new Observable
-                .OnSubscribe<Boolean>() {
+                .OnSubscribe<Integer>() {
             @Override
-            public void call(Subscriber<? super Boolean> subscriber) {
+            public void call(Subscriber<? super Integer> subscriber) {
+                //1.将用户信息保存到数据库
                 UserDao userDao = new UserDao();
                 userDao.clearUser();
-                boolean result = userDao.addUser(username, password);
-                subscriber.onNext(result);
+                boolean dbResult = userDao.addUser(username, password);
+                boolean prfResult = PrefUtils.setString(MyConstants.PREF_USER_INFO, JsonUtil
+                        .parseObjToJson(loginResult.getResult()));
+                if (dbResult && prfResult) {
+                    //成功
+                    subscriber.onNext(0);
+                } else {
+                    //数据库错误
+                    if (!dbResult) {
+                        subscriber.onNext(-1);
+                        return;
+                    }
+                    //preference错误
+                    subscriber.onNext(-2);
+                }
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Boolean>() {
+                .subscribe(new Subscriber<Integer>() {
                     ILoginView loginView = mLoginViewRef.get();
 
                     @Override
@@ -134,7 +153,6 @@ public class LoginPresenterImpl extends BasePresenterImpl implements ILoginPrese
 
                     @Override
                     public void onCompleted() {
-
                     }
 
                     @Override
@@ -143,13 +161,19 @@ public class LoginPresenterImpl extends BasePresenterImpl implements ILoginPrese
                     }
 
                     @Override
-                    public void onNext(Boolean isSuccess) {
-                        if (isSuccess) {
-                            //跳转到主界面
-                            loginView.showError("登录成功!");
-                            loginView.jumpToMainActivity();
-                        } else {
-                            loginView.showError("保存用户信息失败:数据库错误!");
+                    public void onNext(Integer isSuccess) {
+                        switch (isSuccess){
+                            case 0:
+                                //跳转到主界面
+                                loginView.showError("登录成功!");
+                                loginView.jumpToMainActivity();
+                                break;
+                            case -1:
+                                loginView.showError("保存用户信息失败:数据库错误!");
+                                break;
+                            case -2:
+                                loginView.showError("保存用户信息失败:文件错误!");
+                                break;
                         }
                     }
 

@@ -2,7 +2,6 @@ package com.kevin.jdmall.api;
 
 import com.kevin.jdmall.bean.LoginResult;
 
-import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Headers;

@@ -3,12 +3,12 @@ package com.kevin.jdmall.bean;
 /**
  * Function:
  *
- * @FileName: com.kevin.jdmall.bean.RestResult.java
+ * @FileName: com.kevin.jdmall.bean.ResetResult.java
  * @author: zk
  * @date: 2017-06-07 20:55
  */
 
-public class RestResult {
+public class ResetResult {
 
     /**
      * success : true

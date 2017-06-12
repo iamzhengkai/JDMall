@@ -1,7 +1,6 @@
 package com.kevin.jdmall.api;
 
-import com.kevin.jdmall.bean.LoginResult;
-import com.kevin.jdmall.bean.RestResult;
+import com.kevin.jdmall.bean.ResetResult;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -21,7 +20,7 @@ public interface ResetApi {
     @FormUrlEncoded
     @Headers("Cache-Control:no-cache")
     @POST("/reset")
-    Observable<RestResult> reset(
+    Observable<ResetResult> reset(
             @Field("username") String username
     );
 

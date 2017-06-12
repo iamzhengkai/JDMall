@@ -5,7 +5,7 @@ import android.text.TextUtils;
 import com.kevin.jdmall.BuildConfig;
 import com.kevin.jdmall.MyApplication;
 import com.kevin.jdmall.api.ResetApi;
-import com.kevin.jdmall.bean.RestResult;
+import com.kevin.jdmall.bean.ResetResult;
 import com.kevin.jdmall.iview.IResetView;
 import com.kevin.jdmall.presenter.IResetPresenter;
 import com.orhanobut.logger.Logger;
@@ -46,7 +46,7 @@ public class ResetPresenterImpl extends BasePresenterImpl implements IResetPrese
         Subscription s =  MyApplication.mRetrofit.create(ResetApi.class).reset(username)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<RestResult>() {
+                .subscribe(new Observer<ResetResult>() {
                     @Override
                     public void onCompleted() {
                     }
@@ -63,7 +63,7 @@ public class ResetPresenterImpl extends BasePresenterImpl implements IResetPrese
                     }
 
                     @Override
-                    public void onNext(RestResult resetResult) {
+                    public void onNext(ResetResult resetResult) {
                         if (mResetViewRef.get() != null) {
                             mResetViewRef.get().hideProgressDialog();
                             if (resetResult.isSuccess()) {
