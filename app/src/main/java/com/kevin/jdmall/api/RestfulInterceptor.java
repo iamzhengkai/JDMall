@@ -30,6 +30,7 @@ public class RestfulInterceptor implements Interceptor {
         String content = response.body().string();
         try {
             JSONObject jsonObject = new JSONObject(content);
+            //TODO 增加null判断
             if(!jsonObject.getBoolean("success") && jsonObject.getString("result").equals("")){
                 Logger.d("content===============>" + content);
                 String[] splitArray = content.split(",");

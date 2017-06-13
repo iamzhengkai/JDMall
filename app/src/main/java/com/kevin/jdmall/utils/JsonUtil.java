@@ -54,6 +54,7 @@ public class JsonUtil {
 		try {
 			t = gson.fromJson(json, cls);
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return t;
 	}

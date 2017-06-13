@@ -12,12 +12,14 @@ import com.kevin.jdmall.R;
 import com.orhanobut.logger.Logger;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
     protected final String TAG = this.getClass().getSimpleName();
     @LayoutRes
     protected int mLayoutId;
+    private Unbinder mUnbinder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,13 +36,14 @@ public abstract class BaseActivity extends AppCompatActivity {
         mLayoutId = getLayoutId();
         setContentView(mLayoutId);
         StatusBarUtil.setColor(this, getResources().getColor(R.color.colorPrimaryDark));
-        ButterKnife.bind(this);
+        mUnbinder = ButterKnife.bind(this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         ActivityManager.removeActivity(this);
+        mUnbinder.unbind();
     }
     protected abstract int getLayoutId();
 }
