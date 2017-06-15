@@ -34,9 +34,9 @@
                 android:id="@+id/user_icon_iv"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="8dp"
-                android:src="@drawable/user_mgr" />
+                android:src="@drawable/user_mgr"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"/>
 
             <TextView
                 android:id="@+id/user_name_tv"
@@ -45,8 +45,8 @@
                 android:layout_below="@id/user_icon_iv"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="2dp"
-                android:textSize="22sp"
-                android:textStyle="bold" />
+                android:text="@string/user_name_default"
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/user_level_tv"

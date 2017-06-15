@@ -52,34 +52,35 @@ public class RetrofitManager {
             @Override
             public Response intercept(Chain chain) throws IOException {
                 Request request = chain.request();
+
                 //判断是否需要缓存
-                if (request.cacheControl().toString().equals("no-cache")){
+                if (request.cacheControl().noCache()){
                     Logger.d("No-Cache:============>" + request.cacheControl().noCache());
                     return chain.proceed(request);
                 }
+
                 //没网强制从缓存读取(必须得写，不然断网状态下，退出应用，或者等待一分钟后，就获取不到缓存）
                 if (!NetWorkUtil.isNetWorkAvailable(MyApplication.mContext)) {
+                    Logger.i("无网络，从缓存读取！");
                     request = request.newBuilder()
                             .cacheControl(CacheControl.FORCE_CACHE)
                             .build();
                 }
 
+                String cacheHeaderValue = NetWorkUtil.isNetWorkAvailable(MyApplication.mContext) ?
+                        "public, max-age=" : "public, only-if-cached, max-stale=";
+                int cacheTime =  NetWorkUtil.isNetWorkAvailable(MyApplication.mContext) ?
+                        mMaxAge : mMaxStale;
+
                 Response originalResponse = chain.proceed(request);
-                if (NetWorkUtil.isNetWorkAvailable(MyApplication.mContext)) {
-                    //int maxAge = 60; // 在线缓存在1分钟内可读取
-                    return originalResponse.newBuilder()
-                            .removeHeader("Pragma")
-                            .removeHeader("Cache-Control")
-                            .header("Cache-Control", "public, max-age=" + mMaxAge)
-                            .build();
-                } else {
-                    //int maxStale = 60 * 60 * 24 * 28; // 离线时缓存保存4周
-                    return originalResponse.newBuilder()
-                            .removeHeader("Pragma")
-                            .removeHeader("Cache-Control")
-                            .header("Cache-Control", "public, only-if-cached, max-stale=" + mMaxStale)
-                            .build();
-                }
+
+                //int maxAge = 60; // 在线缓存在1分钟内可读取
+                return originalResponse.newBuilder()
+                        .removeHeader("Pragma")
+                        .removeHeader("Cache-Control")
+                        .header("Cache-Control", cacheHeaderValue + cacheTime)
+                        .build();
+
             }
         };
         logging = new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC);
@@ -93,10 +94,13 @@ public class RetrofitManager {
                 .addInterceptor(new RestfulInterceptor())
                 .cache(cache)
                 .build();
+
     }
-    public OkHttpClient getOkHttpClient(){
+
+    public OkHttpClient getOkHttpClient() {
         return client;
     }
+
     public Retrofit getRetrofitClient(@NonNull String baseUrl) {
         return new Retrofit.Builder()
                 .baseUrl(baseUrl)

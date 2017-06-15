@@ -23,6 +23,7 @@ public class LoggingInterceptor implements Interceptor {
         Request request = chain.request();
         //KLog.d(String.format("Sending request %s on %s%n%s", request.url(),  chain.connection(), request.headers()));
         Logger.d("Sending request %s on %s%n%s",request.url(),  chain.connection(), request.headers());
+//        Logger.d("Sending request %s | protocol:%s header:%s",request.url(),  chain.connection().protocol().toString(), request.headers().toString());
         long t1 = System.nanoTime();
         okhttp3.Response response = chain.proceed(chain.request());
         long t2 = System.nanoTime();

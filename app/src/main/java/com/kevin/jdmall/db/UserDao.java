@@ -59,10 +59,9 @@ public class UserDao {
             user._id = cursor.getInt(cursor.getColumnIndex(MyConstants.DbConstants.CLM_ID));
             user.username = cursor.getString(cursor.getColumnIndex(MyConstants.DbConstants.CLM_USERNAME));
             user.pwd = cursor.getString(cursor.getColumnIndex(MyConstants.DbConstants.CLM_PWD));
-            cursor.close();
-            database.close();
         }
-
+        cursor.close();
+        database.close();
         return user;
     }
 }

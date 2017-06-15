@@ -14,4 +14,6 @@
 
     <string name="load_more">加载中...</string>
     <string name="load_error">加载失败,点击重试</string>
+    <string name="user_name_default">未登录</string>
+    <string name="user_level_default">未知</string>
 </resources>

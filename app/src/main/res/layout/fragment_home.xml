@@ -45,7 +45,7 @@
 
     <!-- 滑动界面 -->
 
-    <com.m520it.jdmall.ui.FlexiScrollView
+    <ScrollView
         android:id="@+id/scrollbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -164,6 +164,6 @@
                 android:numColumns="2"
                 android:scrollbars="none" />
         </LinearLayout>
-    </com.m520it.jdmall.ui.FlexiScrollView>
+    </ScrollView>
 
 </LinearLayout>

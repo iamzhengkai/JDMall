@@ -29,6 +29,7 @@ public class RestfulInterceptor implements Interceptor {
         okhttp3.MediaType mediaType = response.body().contentType();
         String content = response.body().string();
         try {
+            Logger.i("content===========>" + content);
             JSONObject jsonObject = new JSONObject(content);
             //TODO 增加null判断
             if(!jsonObject.getBoolean("success") && jsonObject.getString("result").equals("")){

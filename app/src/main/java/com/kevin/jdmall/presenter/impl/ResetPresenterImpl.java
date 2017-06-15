@@ -8,6 +8,7 @@ import com.kevin.jdmall.api.ResetApi;
 import com.kevin.jdmall.bean.ResetResult;
 import com.kevin.jdmall.iview.IResetView;
 import com.kevin.jdmall.presenter.IResetPresenter;
+import com.kevin.jdmall.subscriber.CheckedSubscriber;
 import com.orhanobut.logger.Logger;
 
 import java.lang.ref.WeakReference;
@@ -20,66 +21,42 @@ import rx.schedulers.Schedulers;
 /**
  * Created by 蔡小木 on 2016/4/22 0022.
  */
-public class ResetPresenterImpl extends BasePresenterImpl implements IResetPresenter {
+public class ResetPresenterImpl extends BasePresenterImpl<IResetView> implements IResetPresenter {
 
     private static final String TAG = "ResetPresenterImpl";
-//    private ILoginView mLoginView;
-    private WeakReference<IResetView> mResetViewRef;
 
-    public ResetPresenterImpl(IResetView resetView) {
-        if (resetView==null)
-            throw new IllegalArgumentException("IRestView must not be null");
-
-
-        this.mResetViewRef = new WeakReference<IResetView>(resetView);
-//        this.mLoginView = loginView;
+    public ResetPresenterImpl(IResetView iView) {
+        super(iView);
     }
 
     @Override
     public void reset(String username) {
-        if ((mResetViewRef.get()) != null){
-            mResetViewRef.get().showProgressDialog();}
-        else {
-            Logger.e("ResetActivity已被回收");
-            return;
-        }
-        Subscription s =  MyApplication.mRetrofit.create(ResetApi.class).reset(username)
+        mViewRef.get().showProgressDialog();
+        Subscription s = MyApplication.mRetrofit.create(ResetApi.class).reset(username)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ResetResult>() {
-                    @Override
-                    public void onCompleted() {
-                    }
-
+                .subscribe(new CheckedSubscriber<ResetResult, IResetView>(mViewRef.get()) {
                     @Override
                     public void onError(Throwable e) {
-                        if (mResetViewRef.get() != null){
-                            mResetViewRef.get().hideProgressDialog();
-                            mResetViewRef.get().showError(e.getMessage());
-                        }else {
-                            Logger.e("ResetActivity已被回收");
-                        }
+                        mView.hideProgressDialog();
+                        mView.showError(e.getMessage());
                         e.printStackTrace();
                     }
 
                     @Override
                     public void onNext(ResetResult resetResult) {
-                        if (mResetViewRef.get() != null) {
-                            mResetViewRef.get().hideProgressDialog();
-                            if (resetResult.isSuccess()) {
-                                mResetViewRef.get().showError("密码重置成功!");
-                                if (BuildConfig.DEBUG) {
-                                    Logger.d(TAG, resetResult.toString());
-                                }
-                                //跳转到登录页面
-                                mResetViewRef.get().returnToLoginActivity();
-
-                            } else {
-                                mResetViewRef.get().showError(resetResult.getErrorMsg());
+                        mView.hideProgressDialog();
+                        if (resetResult.isSuccess()) {
+                            mView.showError("密码重置成功!");
+                            if (BuildConfig.DEBUG) {
+                                Logger.d(TAG, resetResult.toString());
                             }
-                        }else {
-                            Logger.e("ResetActivity已被回收");
+                            //跳转到登录页面
+                            mView.returnToLoginActivity();
+                        } else {
+                            mView.showError(resetResult.getErrorMsg());
                         }
+
                     }
                 });
         addSubscription(s);
@@ -87,10 +64,10 @@ public class ResetPresenterImpl extends BasePresenterImpl implements IResetPrese
 
     @Override
     public boolean vertifyResetInfo(String username) {
-        if (TextUtils.isEmpty(username)){
-            if (mResetViewRef.get() != null){
-                mResetViewRef.get().showError("用户名不能为空！");
-            }else {
+        if (TextUtils.isEmpty(username)) {
+            if (mViewRef.get() != null) {
+                mViewRef.get().showError("用户名不能为空！");
+            } else {
                 Logger.e("ResetActivity已被回收");
             }
             return false;

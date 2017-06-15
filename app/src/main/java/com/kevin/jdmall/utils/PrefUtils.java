@@ -28,27 +28,27 @@ public class PrefUtils {
 	}
 
 	public static boolean getBoolean(String key, boolean defValue) {
-		return sp.getBoolean(key, defValue);
+		return getPreferences().getBoolean(key, defValue);
 	}
 
 	public static boolean setBoolean(String key, boolean value) {
 
-		return sp.edit().putBoolean(key, value).commit();
+		return getPreferences().edit().putBoolean(key, value).commit();
 	}
 
 	public static boolean setString(String key, String value) {
-		return sp.edit().putString(key, value).commit();
+		return getPreferences().edit().putString(key, value).commit();
 	}
 
 	public static String getString(String key, String defValue) {
-		return sp.getString(key, defValue);
+		return getPreferences().getString(key, defValue);
 	}
 
 	public static boolean setInt(String key, int value) {
-		return sp.edit().putInt(key, value).commit();
+		return getPreferences().edit().putInt(key, value).commit();
 	}
 
 	public static int getInt(String key, int defValue) {
-		return sp.getInt(key, defValue);
+		return getPreferences().getInt(key, defValue);
 	}
 }

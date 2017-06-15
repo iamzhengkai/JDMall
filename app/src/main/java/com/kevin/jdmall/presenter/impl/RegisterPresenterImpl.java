@@ -8,6 +8,7 @@ import com.kevin.jdmall.api.RegisterApi;
 import com.kevin.jdmall.bean.RegisterResult;
 import com.kevin.jdmall.iview.IRegisterView;
 import com.kevin.jdmall.presenter.IRegisterPresenter;
+import com.kevin.jdmall.subscriber.CheckedSubscriber;
 import com.orhanobut.logger.Logger;
 
 import rx.Observer;
@@ -16,50 +17,43 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 
-public class RegisterPresenterImpl extends BasePresenterImpl implements IRegisterPresenter {
+public class RegisterPresenterImpl extends BasePresenterImpl<IRegisterView> implements IRegisterPresenter {
 
     private static final String TAG = "RegisterPresenterImpl";
-    private IRegisterView mRegisterView;
 
-    public RegisterPresenterImpl(IRegisterView registerView) {
-        if (registerView==null)
-            throw new IllegalArgumentException("IRegisterView must not be null");
-        this.mRegisterView = registerView;
+    public RegisterPresenterImpl(IRegisterView iView) {
+        super(iView);
     }
 
     @Override
     public void register(String username,String password) {
-        mRegisterView.showProgressDialog();
+        mViewRef.get().showProgressDialog();
 
         Subscription s =  MyApplication.mRetrofit.create(RegisterApi.class)
                 .login(username,password)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<RegisterResult>() {
-                    @Override
-                    public void onCompleted() {
-                    }
-
+                .subscribe(new CheckedSubscriber<RegisterResult,IRegisterView>(mViewRef.get()) {
                     @Override
                     public void onError(Throwable e) {
-                        mRegisterView.hideProgressDialog();
+                        mView.hideProgressDialog();
                         e.printStackTrace();
-                        mRegisterView.showError(e.getMessage());
+                        mView.showError(e.getMessage());
                     }
 
                     @Override
                     public void onNext(RegisterResult registerResult) {
-                        mRegisterView.hideProgressDialog();
+                        mView.hideProgressDialog();
                         if (registerResult.isSuccess()){
-                            mRegisterView.showError("注册成功!");
+                            mView.showError("注册成功!");
                             if (BuildConfig.DEBUG){
                                 Logger.d(TAG,registerResult.toString());
                             }
                             //跳转到主界面
-                            mRegisterView.jumpToLoginActivity();
+                            mView.jumpToLoginActivity();
 
                         }else{
-                            mRegisterView.showError(registerResult.getErrorMsg());
+                            mView.showError(registerResult.getErrorMsg());
                         }
 
                     }
@@ -70,12 +64,12 @@ public class RegisterPresenterImpl extends BasePresenterImpl implements IRegiste
     @Override
     public boolean vertifyRegisterInfo(String username,String password,String repassword) {
         if (TextUtils.isEmpty(username) || TextUtils.isEmpty(password)||TextUtils.isEmpty(repassword)){
-            mRegisterView.showError("用户名或密码不能为空！");
+            mViewRef.get().showError("用户名或密码不能为空！");
             return false;
         }
 
         if (!password.equals(repassword)){
-            mRegisterView.showError("两次输入的密码不相同，请重新输入！");
+            mViewRef.get().showError("两次输入的密码不相同，请重新输入！");
             return false;
         }
 

@@ -13,8 +13,8 @@ import com.kevin.jdmall.presenter.impl.BasePresenterImpl;
  * Created by Administrator on 2017/6/8.
  */
 
-public abstract class BasePresenterFragment extends Fragment {
-    protected BasePresenterImpl mPresenter;
+public abstract class BasePresenterFragment<T extends BasePresenterImpl> extends Fragment {
+    protected T mPresenter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,7 +40,7 @@ public abstract class BasePresenterFragment extends Fragment {
     protected abstract View initView(LayoutInflater inflater, ViewGroup container, Bundle
             savedInstanceState);
 
-    protected abstract BasePresenterImpl initPresenter();
+    protected abstract T initPresenter();
 
     @Override
     public void onDestroy() {
