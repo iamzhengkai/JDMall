@@ -3,6 +3,7 @@ package com.kevin.jdmall.api;
 import android.support.annotation.NonNull;
 
 
+import com.kevin.jdmall.BuildConfig;
 import com.kevin.jdmall.MyApplication;
 import com.kevin.jdmall.utils.NetWorkUtil;
 import com.orhanobut.logger.Logger;
@@ -87,14 +88,16 @@ public class RetrofitManager {
         loggingInterceptor = new LoggingInterceptor();
         httpCacheDirectory = new File(MyApplication.mContext.getCacheDir(), mCacheFileName);
         cache = new Cache(httpCacheDirectory, mCacheSize);
-        client = new OkHttpClient.Builder()
+        OkHttpClient.Builder okhttpBuilder = new OkHttpClient.Builder()
                 .addNetworkInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR)
                 .addInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR)
-                .addInterceptor(loggingInterceptor)
                 .addInterceptor(new RestfulInterceptor())
-                .cache(cache)
-                .build();
-
+                .cache(cache);
+        //只有当为debug模式时，才会打印日志
+        if (BuildConfig.DEBUG){
+            okhttpBuilder.addInterceptor(loggingInterceptor);
+        }
+        client = okhttpBuilder.build();
     }
 
     public OkHttpClient getOkHttpClient() {
