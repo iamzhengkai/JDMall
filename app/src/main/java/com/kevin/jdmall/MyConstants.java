@@ -20,5 +20,7 @@ public interface MyConstants {
         String CLM_USERNAME = "username";
         String CLM_PWD = "pwd";
     }
+    String EXTRA_PRODUCT_LIST_THIRD_ID = "category_third_id";
+    String EXTRA_PRODUCT_LIST_TOP_ID = "category_top_id";
 
 }

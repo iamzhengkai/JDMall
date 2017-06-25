@@ -45,13 +45,12 @@ public abstract class BaseFragment extends Fragment {
 	 * 
 	 * @return
 	 */
-	public abstract View initView();
+	protected abstract View initView();
 
 	// Fragment所依赖的Activity创建完成
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-
 		initData();
 	}
 

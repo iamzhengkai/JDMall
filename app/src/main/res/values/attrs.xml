@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- RatioImageView的属性 -->
+    <declare-styleable name="RatioImageView">
+        <attr name="imageRatio" format="float"/>
+    </declare-styleable>
+
+    <declare-styleable name="RatioViewPager">
+        <attr name="pagerRatio" format="float"/>
+    </declare-styleable>
+</resources>

@@ -57,7 +57,7 @@ public class MineFragment extends BaseFragment {
     private Subscription mSubscription;
 
     @Override
-    public View initView() {
+    protected View initView() {
         return View.inflate(mActivity, R.layout.fragment_mine, null);
     }
 
@@ -65,20 +65,17 @@ public class MineFragment extends BaseFragment {
     public void initData() {
         mSubscription = Observable.just(PrefUtils.getString(MyConstants.PREF_USER_INFO,
                 null))
-                .map(new Func1<String, LoginResult.ResultBean>() {
-                    @Override
-                    public LoginResult.ResultBean call(String s) {
-                        return JsonUtil.parseJsonToBean(s, LoginResult
-                                .ResultBean.class);
-                    }
-                }).subscribeOn(Schedulers.io())
+                .map(s -> JsonUtil.parseJsonToBean(s, LoginResult
+                        .ResultBean.class))
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<LoginResult.ResultBean>() {
+                .subscribe(this::handleResult)
+                /*.subscribe(new Action1<LoginResult.ResultBean>() {
                     @Override
                     public void call(LoginResult.ResultBean resultBean) {
                         handleResult(resultBean);
                     }
-                });
+                })*/;
 
        /* Observable.create(new Observable.OnSubscribe<LoginResult.ResultBean>() {
             @Override

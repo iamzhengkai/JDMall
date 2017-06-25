@@ -8,13 +8,14 @@ import com.kevin.jdmall.presenter.impl.BasePresenterImpl;
  * Created by Administrator on 2017/6/8.
  */
 
-public abstract class BasePresenterActivity extends BaseActivity {
-    protected BasePresenterImpl mPresenter;
+public abstract class BasePresenterActivity<T extends BasePresenterImpl> extends BaseActivity {
+    protected T mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPresenter = initPresenter();
+        initData();
     }
 
     @Override
@@ -24,5 +25,8 @@ public abstract class BasePresenterActivity extends BaseActivity {
             mPresenter.unsubcrible();
     }
 
-    protected abstract BasePresenterImpl initPresenter();
+    protected abstract T initPresenter();
+
+    protected  void initData(){
+    }
 }

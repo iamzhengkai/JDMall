@@ -15,7 +15,7 @@ import com.kevin.jdmall.utils.ToastUtil;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class RegisterActivity extends BasePresenterActivity implements IRegisterView {
+public class RegisterActivity extends BasePresenterActivity<RegisterPresenterImpl> implements IRegisterView {
     @BindView(R.id.title_v)
     TextView mTitleV;
     @BindView(R.id.username_et)
@@ -73,14 +73,14 @@ public class RegisterActivity extends BasePresenterActivity implements IRegister
             ToastUtil.showToast("请同意用户协议！");
             return;
         }
-        if(((RegisterPresenterImpl)mPresenter).vertifyRegisterInfo(username,password,repassword)){
-            ((RegisterPresenterImpl)mPresenter).register(username,password);
+        if(mPresenter.vertifyRegisterInfo(username,password,repassword)){
+            mPresenter.register(username,password);
         }
 
     }
 
     @Override
-    protected BasePresenterImpl initPresenter() {
+    protected RegisterPresenterImpl initPresenter() {
         return new RegisterPresenterImpl(this);
     }
 }

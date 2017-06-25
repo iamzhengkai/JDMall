@@ -37,6 +37,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(mLayoutId);
         StatusBarUtil.setColor(this, getResources().getColor(R.color.colorPrimaryDark));
         mUnbinder = ButterKnife.bind(this);
+
     }
 
     @Override

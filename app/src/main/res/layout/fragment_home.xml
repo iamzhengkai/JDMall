@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical">
 
     <!-- 头部 -->
 
@@ -63,34 +64,38 @@
             <RelativeLayout
                 android:id="@+id/ad_rl"
                 android:layout_width="match_parent"
-                android:layout_height="175dp"
-                android:visibility="gone" >
+                android:layout_height="wrap_content"
+                android:visibility="visible" >
 
-                <android.support.v4.view.ViewPager
+                <com.kevin.jdmall.ui.view.RatioViewPager
                     android:id="@+id/ad_vp"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="175dp"
+                    app:pagerRatio="2.05"
+                    />
 
                 <LinearLayout
                     android:id="@+id/ad_indicator"
                     android:layout_width="match_parent"
-                    android:layout_height="25dp"
+                    android:layout_height="18dp"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
-                    android:background="#8000"
+                    android:background="@color/backgroundGray"
                     android:gravity="center"
                     android:orientation="horizontal" />
             </RelativeLayout>
 
             <include layout="@layout/home_child_module" />
 
-            <com.loopj.android.image.SmartImageView
+            <com.kevin.jdmall.ui.view.RatioImageView
                 android:id="@+id/ad2_iv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:scaleType="fitXY"
-                android:visibility="gone" />
+                android:visibility="gone"
+                app:imageRatio="3.5"
+                />
             <!-- 秒杀 -->
 
             <RelativeLayout
@@ -140,11 +145,12 @@
                     android:textSize="12sp" />
             </RelativeLayout>
 
-            <com.m520it.jdmall.ui.HorizontalListView
-                android:id="@+id/horizon_listview"
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_seckill"
                 android:layout_width="match_parent"
-                android:layout_height="160dp"
-                android:background="@android:color/white" />
+                android:layout_height="wrap_content">
+
+            </android.support.v7.widget.RecyclerView>
 
             <TextView
                 android:layout_width="match_parent"
@@ -155,14 +161,10 @@
                 android:textColor="#F00"
                 android:textSize="16sp" />
 
-            <GridView
-                android:id="@+id/recommend_gv"
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_recommand"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#FFF"
-                android:listSelector="@android:color/transparent"
-                android:numColumns="2"
-                android:scrollbars="none" />
+                android:layout_height="wrap_content"/>
         </LinearLayout>
     </ScrollView>
 

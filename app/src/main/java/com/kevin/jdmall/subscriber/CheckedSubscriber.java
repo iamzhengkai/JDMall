@@ -30,6 +30,6 @@ public abstract class CheckedSubscriber<T,V> extends Subscriber<T> {
 
     @Override
     public void onCompleted() {
-
+        Logger.e("CheckedSubscriber:onCompleted！");
     }
 }

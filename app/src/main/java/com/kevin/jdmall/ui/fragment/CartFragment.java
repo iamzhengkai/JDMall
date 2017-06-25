@@ -14,7 +14,7 @@ import com.kevin.jdmall.presenter.impl.BasePresenterImpl;
 
 public class CartFragment extends BasePresenterFragment {
     @Override
-    protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    protected View initView() {
         TextView view = new TextView(getActivity());
         view.setText("购物车");
         return view;

@@ -12,10 +12,13 @@ import android.view.ViewGroup;
 import com.kevin.jdmall.ui.view.LoadingPage;
 import com.kevin.jdmall.utils.ViewUtil;
 
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 public abstract class BaseLoadingFragment extends Fragment {
 	protected LoadingPage mLoadingPage;
 	protected Activity mActivity;
-
+	private Unbinder mUnbinder;
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -34,7 +37,9 @@ public abstract class BaseLoadingFragment extends Fragment {
 
 				@Override
 				protected View createSuccessView() {
-					return BaseLoadingFragment.this.createSuccessView();
+					View view = BaseLoadingFragment.this.createSuccessView();
+					mUnbinder = ButterKnife.bind(this, view);
+					return view;
 				}
 			};
 		}else {
@@ -48,5 +53,13 @@ public abstract class BaseLoadingFragment extends Fragment {
 	protected abstract View createSuccessView();
 	protected Object loadData(){
 		return null;
+	}
+
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		if (mUnbinder != null){
+			mUnbinder.unbind();
+		}
 	}
 }

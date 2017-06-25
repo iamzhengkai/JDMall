@@ -1,44 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal" >
+    android:orientation="horizontal"
+    >
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="130dp"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
-        <com.loopj.android.image.SmartImageView
+        <ImageView
             android:id="@+id/product_iv"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="8dp"  />
-        
+            android:layout_marginLeft="8dp"
+            tools:src="@drawable/lyq"
+            />
+
         <TextView
             android:id="@+id/name_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:lines="2"
-            android:layout_toRightOf="@id/product_iv"
             android:layout_alignTop="@id/product_iv"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
+            android:layout_toRightOf="@id/product_iv"
+            android:ellipsize="end"
+            android:lines="2"
             android:textColor="#2E2E2E"
             android:textSize="16sp"
-            android:ellipsize="end"  />
-        
+            tools:text="连衣裙"
+            />
+
         <TextView
             android:id="@+id/commrate_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/product_iv"
             android:layout_alignBottom="@id/product_iv"
             android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@id/product_iv"
             android:textColor="#81838E"
-            android:textSize="14sp"  />
-        
+            android:textSize="14sp"
+            tools:text="一条评论，好评率98%"
+            />
+
         <TextView
             android:id="@+id/price_tv"
             android:layout_width="wrap_content"
@@ -47,16 +56,18 @@
             android:layout_alignLeft="@id/commrate_tv"
             android:layout_marginBottom="4dp"
             android:textColor="#F23030"
-            android:textSize="20sp"  />
-        
+            android:textSize="20sp"
+            tools:text="价格: 89"
+            />
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_shopcar"
+            android:layout_alignBottom="@id/product_iv"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
-            android:layout_alignBottom="@id/product_iv"  />
-        
+            android:src="@drawable/icon_shopcar"/>
+
     </RelativeLayout>
 
 </LinearLayout>

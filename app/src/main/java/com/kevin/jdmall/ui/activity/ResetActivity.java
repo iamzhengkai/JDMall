@@ -15,7 +15,7 @@ import com.kevin.jdmall.utils.ToastUtil;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class ResetActivity extends BasePresenterActivity implements IResetView {
+public class ResetActivity extends BasePresenterActivity<ResetPresenterImpl> implements IResetView {
 
     @BindView(R.id.username_et)
     EditText mUsernameEt;
@@ -61,13 +61,13 @@ public class ResetActivity extends BasePresenterActivity implements IResetView {
     @OnClick(R.id.bt_reset)
     public void onViewClicked(View view) {
         String username = mUsernameEt.getText().toString();
-        if(((ResetPresenterImpl)mPresenter).vertifyResetInfo(username)){
-            ((ResetPresenterImpl)mPresenter).reset(username);
+        if(mPresenter.vertifyResetInfo(username)){
+            mPresenter.reset(username);
         }
     }
 
     @Override
-    protected BasePresenterImpl initPresenter() {
+    protected ResetPresenterImpl initPresenter() {
         return  new ResetPresenterImpl(this);
     }
 }

@@ -25,9 +25,6 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
-/**
- * Created by 蔡小木 on 2016/4/22 0022.
- */
 public class LoginPresenterImpl extends BasePresenterImpl<ILoginView> implements ILoginPresenter {
 
     private static final String TAG = "LoginPresenterImpl";
@@ -73,6 +70,7 @@ public class LoginPresenterImpl extends BasePresenterImpl<ILoginView> implements
                     @Override
                     public void onError(Throwable e) {
                         mView.showError(e.getMessage());
+                        mView.hideProgressDialog();
                         e.printStackTrace();
                     }
 
@@ -83,6 +81,7 @@ public class LoginPresenterImpl extends BasePresenterImpl<ILoginView> implements
                             case 0:
                                 //跳转到主界面
                                 mView.showError("登录成功!");
+                                mView.hideProgressDialog();
                                 mView.jumpToMainActivity();
                                 break;
                             case -1:

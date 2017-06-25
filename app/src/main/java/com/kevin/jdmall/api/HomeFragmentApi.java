@@ -2,6 +2,8 @@ package com.kevin.jdmall.api;
 
 import com.kevin.jdmall.bean.BannerResult;
 import com.kevin.jdmall.bean.LoginResult;
+import com.kevin.jdmall.bean.RecommendResult;
+import com.kevin.jdmall.bean.SecKillResult;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -27,7 +29,13 @@ public interface HomeFragmentApi {
             @Field("adKind") int adKind
     );*/
 
-       @GET("/banner")
+    @GET("/banner")
     Observable<BannerResult> getBanner(@Query("adKind") int adKind);
+
+    @GET("/seckill")
+    Observable<SecKillResult> getSecKill();
+
+    @GET("/getYourFav")
+    Observable<RecommendResult> getYourFav();
 
 }

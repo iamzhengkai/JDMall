@@ -18,7 +18,7 @@ import com.orhanobut.logger.Logger;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class LoginActivity extends BasePresenterActivity implements ILoginView {
+public class LoginActivity extends BasePresenterActivity<LoginPresenterImpl> implements ILoginView {
 
     @BindView(R.id.title_v)
     TextView mTitleV;
@@ -38,31 +38,31 @@ public class LoginActivity extends BasePresenterActivity implements ILoginView {
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setTitle("登录");
         mProgressDialog.setMessage("登陆中...");
-
-        ((LoginPresenterImpl)mPresenter).readUserFromDb();
+        mPresenter.readUserFromDb();
     }
 
     @OnClick(R.id.login_btn)
-    public void onLoginBtnClick(){
+    public void onLoginBtnClick() {
         String username = mNameEt.getText().toString();
         String password = mPwdEt.getText().toString();
-        Logger.d(TAG,"username"+ username);
-        Logger.d(TAG,"pwd"+ password);
+        Logger.d(TAG, "username" + username);
+        Logger.d(TAG, "pwd" + password);
         //调用Presenter进行业务处理
-        if (((LoginPresenterImpl)mPresenter).vertifyLoginInfo(username, password)){
-            ((LoginPresenterImpl)mPresenter).login(username, password);
+        if (mPresenter.vertifyLoginInfo(username, password)) {
+            mPresenter.login(username, password);
         }
     }
 
     @OnClick(R.id.bt_register)
-    public void onRegisterBtnClick(){
+    public void onRegisterBtnClick() {
         ToastUtil.showToast("注册");
-        ActivityManager.startActivity(this,RegisterActivity.class,false);
+        ActivityManager.startActivity(this, RegisterActivity.class, false);
     }
+
     @OnClick(R.id.bt_reset_pwd)
-    public void onResetPwdBtnClick(){
+    public void onResetPwdBtnClick() {
         ToastUtil.showToast("重置");
-        ActivityManager.startActivity(this,ResetActivity.class,false);
+        ActivityManager.startActivity(this, ResetActivity.class, false);
     }
 
     @Override
@@ -88,7 +88,7 @@ public class LoginActivity extends BasePresenterActivity implements ILoginView {
 
     @Override
     public void jumpToMainActivity() {
-        ActivityManager.startActivity(this,MainActivity.class,true);
+        ActivityManager.startActivity(this, MainActivity.class, true);
     }
 
     @Override
@@ -99,7 +99,7 @@ public class LoginActivity extends BasePresenterActivity implements ILoginView {
 
 
     @Override
-    protected BasePresenterImpl initPresenter() {
+    protected LoginPresenterImpl initPresenter() {
         return new LoginPresenterImpl(this);
     }
 }
