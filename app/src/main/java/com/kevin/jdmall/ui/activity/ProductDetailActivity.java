@@ -9,6 +9,7 @@ import com.kevin.jdmall.R;
 import com.kevin.jdmall.adapter.ProductDetailPagerAdapter;
 import com.kevin.jdmall.iview.IProductDetailView;
 import com.kevin.jdmall.presenter.impl.ProductDetailPresenterImpl;
+import com.kevin.jdmall.ui.fragment.factory.ProductDetailFragmentFactory;
 import com.kevin.jdmall.utils.ToastUtil;
 import com.orhanobut.logger.Logger;
 
@@ -97,5 +98,12 @@ public class ProductDetailActivity extends
         mCommentView.setVisibility(View.INVISIBLE);
         mDetailsView.setVisibility(View.INVISIBLE);
         mIntroduceView.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //避免内存泄漏
+        ProductDetailFragmentFactory.clearFragment();
     }
 }

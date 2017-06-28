@@ -48,12 +48,12 @@
             android:id="@+id/rating_bar"
             layout="@layout/rating_bar_view" />-->
         <android.support.v7.widget.AppCompatRatingBar
+            android:id="@+id/rating_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/roomRatingBar"
             android:isIndicator="true"
             />
-
         <TextView
             android:id="@+id/content_tv"
             android:layout_width="wrap_content"
@@ -61,8 +61,22 @@
             android:layout_margin="10dp"
             android:ellipsize="end"
             android:maxLines="2" />
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            >
+            <LinearLayout
+                android:id="@+id/iamges_container"
+                android:layout_width="wrap_content"
+                android:layout_height="80dp"
+                android:orientation="horizontal"
+                >
+            </LinearLayout>
+        </HorizontalScrollView>
         
-        <LinearLayout
+      <!--  <LinearLayout
             android:id="@+id/iamges_container"
             android:layout_width="match_parent"
             android:layout_height="80dp"
@@ -89,7 +103,7 @@
                 android:layout_weight="1"
                 android:layout_marginLeft="5dp"
                 android:layout_height="match_parent" />
-		</LinearLayout>
+		</LinearLayout>-->
         <TextView
             android:id="@+id/buytime_tv"
             android:layout_width="match_parent"

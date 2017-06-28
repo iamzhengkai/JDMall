@@ -1,5 +1,9 @@
 package com.kevin.jdmall.presenter;
 
+import java.util.Map;
+
+import retrofit2.http.Field;
+
 /**
  * Function:
  *
@@ -8,5 +12,7 @@ package com.kevin.jdmall.presenter;
  * @date: 2017-06-28 17:53
  */
 
-interface IDetailCommentFragmentPresenter {
+public interface IDetailCommentFragmentPresenter extends IBasePresenter{
+    void getCommentCount(int productId);
+    void getCommentDetail(Map<String,Object> params);
 }

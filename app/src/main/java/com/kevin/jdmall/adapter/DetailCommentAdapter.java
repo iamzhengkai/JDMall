@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.kevin.jdmall.MyConstants;
 import com.kevin.jdmall.R;
 import com.kevin.jdmall.bean.BrandResult;
+import com.kevin.jdmall.bean.CommentDetailResult;
 import com.kevin.jdmall.bean.ProductCommentResult;
 import com.kevin.jdmall.utils.DensityUtil;
 
@@ -31,12 +32,11 @@ import butterknife.ButterKnife;
 
 public class DetailCommentAdapter extends
         RecyclerView.Adapter<DetailCommentAdapter.VH> {
-
-    private List<ProductCommentResult.ResultBean> mList;
+    private List<CommentDetailResult.ResultBean> mList;
     private Context mContext;
     private OnItemClickListener mOnItemClickListener;
 
-    public DetailCommentAdapter(Context context, List<ProductCommentResult.ResultBean>
+    public DetailCommentAdapter(Context context, List<CommentDetailResult.ResultBean>
             list) {
         mList = list;
         mContext = context;
@@ -44,30 +44,42 @@ public class DetailCommentAdapter extends
 
     @Override
     public VH onCreateViewHolder(ViewGroup viewGroup, int i) {
-        return new VH(View.inflate(mContext, R.layout.recommend_comment_item_view, null));
+        return new VH(View.inflate(mContext, R.layout.item_comment_view, null));
     }
 
     @Override
     public void onBindViewHolder(VH vh, int i) {
-        ProductCommentResult.ResultBean item = mList.get(i);
-        vh.mRatingBar.setRating(item.getRate());
+        CommentDetailResult.ResultBean item = mList.get(i);
+        //头像
+        Glide.with(mContext).load(MyConstants.BASE_URL + item.getUserImg()).into(vh.mIconIv);
         vh.mNameTv.setText(item.getUserName());
+        vh.mTimeTv.setText(item.getCommentTime());
+        vh.mRatingBar.setRating(item.getRate());
         vh.mContentTv.setText(item.getComment());
-        if (item.getImgUrls().size() > 0){
+        vh.mBuytimeTv.setText(item.getBuyTime());
+        vh.mBuyversionTv.setText(item.getProductType());
+        vh.mLovecountTv.setText("" + item.getLoveCount());
+        vh.mSubcommentTv.setText("" + item.getSubComment());
+        //图片
+        vh.mIamgesContainer.removeAllViews();
+        if (item.getImgUrls().size() > 0) {
             LinearLayout.LayoutParams params =
-                    new LinearLayout.LayoutParams(DensityUtil.dp2px(mContext,60),DensityUtil.dp2px(mContext,80));
+                    new LinearLayout.LayoutParams(DensityUtil.dp2px(mContext, 60), DensityUtil
+                            .dp2px(mContext, 80));
             vh.mIamgesContainer.setVisibility(View.VISIBLE);
             for (int j = 0; j < item.getImgUrls().size(); j++) {
                 ImageView imageView = new ImageView(mContext);
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                if (j > 0){
-                    params.leftMargin = DensityUtil.dp2px(mContext,5);
-                }
-                Glide.with(mContext).load(MyConstants.BASE_URL + item.getImgUrls().get(j)).into(imageView);
-                vh.mIamgesContainer.addView(imageView,params);
+               /* if (j > 0) {
+                    params.leftMargin = DensityUtil.dp2px(mContext, 5);
+                }*/
+                params.leftMargin = DensityUtil.dp2px(mContext, 5);
+                Glide.with(mContext).load(MyConstants.BASE_URL + item.getImgUrls().get(j)).into
+                        (imageView);
+                vh.mIamgesContainer.addView(imageView, params);
             }
-        }else{
-            vh.mIamgesContainer.setVisibility(View.INVISIBLE);
+        } else {
+            vh.mIamgesContainer.setVisibility(View.GONE);
         }
 
     }
@@ -82,12 +94,24 @@ public class DetailCommentAdapter extends
     }
 
     static class VH extends RecyclerView.ViewHolder {
+        @BindView(R.id.icon_iv)
+        ImageView mIconIv;
         @BindView(R.id.name_tv)
         TextView mNameTv;
+        @BindView(R.id.time_tv)
+        TextView mTimeTv;
         @BindView(R.id.content_tv)
         TextView mContentTv;
         @BindView(R.id.iamges_container)
         LinearLayout mIamgesContainer;
+        @BindView(R.id.buytime_tv)
+        TextView mBuytimeTv;
+        @BindView(R.id.buyversion_tv)
+        TextView mBuyversionTv;
+        @BindView(R.id.lovecount_tv)
+        TextView mLovecountTv;
+        @BindView(R.id.subcomment_tv)
+        TextView mSubcommentTv;
         @BindView(R.id.rating_bar)
         AppCompatRatingBar mRatingBar;
 

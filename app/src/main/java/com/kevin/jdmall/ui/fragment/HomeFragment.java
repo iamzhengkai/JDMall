@@ -1,10 +1,13 @@
 package com.kevin.jdmall.ui.fragment;
 
+import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -140,19 +143,16 @@ public class HomeFragment extends BasePresenterFragment<HomeFragmentPresenterImp
 
         mRvSeckKill.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL,false));
         mRvRecommand.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
+        //流畅滑动
+        mRvRecommand.setNestedScrollingEnabled(false);
+
 //        initDots(5);
         //获取数据
+
         mPresenter.getBanner(1);
         mPresenter.getBanner(2);
         mPresenter.getSecKill();
         mPresenter.getYourFav();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (mAutoRunSub.isUnsubscribed())
-            mAutoRunSub.unsubscribe();
     }
 
     @Override
@@ -227,5 +227,32 @@ public class HomeFragment extends BasePresenterFragment<HomeFragmentPresenterImp
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mList.size() > 0){
+            autoRun();
+        }
+    }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        stopAutoRun();
+    }
+
+  /*  @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Logger.e("=============>onDestroy");
+        stopAutoRun();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Logger.e("=============>onDestroyView");
+       stopAutoRun();
+    }
+*/
 }

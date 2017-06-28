@@ -150,12 +150,13 @@
         android:layout_height="1dp"
         android:background="#767676" />
 
-    <com.m520it.jdmall.ui.FlexiListView
-        android:id="@+id/lv"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_comment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:cacheColorHint="#0000"
-        android:listSelector="#0000"
-        android:scrollbars="none" />
+        android:scrollbars="none"
+        android:overScrollMode="never"
+        android:nestedScrollingEnabled="false"
+        />
 
 </LinearLayout>

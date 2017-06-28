@@ -20,6 +20,7 @@ import com.kevin.jdmall.iview.IDetailProductView;
 import com.kevin.jdmall.presenter.impl.DetailProductFragmentPresenterImpl;
 import com.kevin.jdmall.ui.activity.ProductDetailActivity;
 import com.orhanobut.logger.Logger;
+import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
 import java.util.List;
 
@@ -81,6 +82,8 @@ public class ProductDetailProductFragment extends
         flexboxLayoutManager.setFlexWrap(FlexWrap.WRAP);
         mProductVersionsGv.setLayoutManager(flexboxLayoutManager);
         mRvGoodComment.setLayoutManager(new LinearLayoutManager(mActivity));
+        mRvGoodComment.setNestedScrollingEnabled(false);
+        mRvGoodComment.addItemDecoration(new HorizontalDividerItemDecoration.Builder(mActivity).build());
     }
 
     @Override

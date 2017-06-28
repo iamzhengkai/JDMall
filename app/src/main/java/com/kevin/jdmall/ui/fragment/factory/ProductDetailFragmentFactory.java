@@ -36,5 +36,8 @@ public class ProductDetailFragmentFactory {
     public static void removeFragment(String tag){
         fragmentCache.remove(tag);
     }
+    public static void clearFragment(){
+        fragmentCache.clear();
+    }
 
 }

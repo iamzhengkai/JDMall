@@ -2,6 +2,7 @@ package com.kevin.jdmall.ui.activity;
 
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -77,5 +78,17 @@ public class MainActivity extends BaseActivity {
         imageView.setImageResource(tab.resId);
         textView.setText(tab.title);
         return view;
+    }
+
+    @Override
+    public void onBackPressed() {
+        //处理返回键
+        String tag = mTabhost.getCurrentTabTag();
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
+        if (fragment instanceof HomeFragment){
+            super.onBackPressed();
+        }else{
+            mTabhost.setCurrentTab(0);
+        }
     }
 }

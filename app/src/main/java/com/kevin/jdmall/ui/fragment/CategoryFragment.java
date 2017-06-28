@@ -147,4 +147,6 @@ public class CategoryFragment extends BasePresenterFragment<CategoryFragmentPres
         mFlContainer.invalidate();
     }
 
+
+
 }

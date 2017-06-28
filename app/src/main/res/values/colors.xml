@@ -18,4 +18,5 @@
     <color name="colorTextRed">#EB4F38</color>
 
     <color name="backgroundGray">#99B3BFBF</color>
+    <color name="backgroundLightGray">#aaB3BFBF</color>
 </resources>
