@@ -10,6 +10,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.flexbox.AlignSelf;
 import com.google.android.flexbox.FlexboxLayout;
 import com.kevin.jdmall.MyConstants;
 import com.kevin.jdmall.R;
@@ -93,7 +94,8 @@ public class CategoryFragment extends BasePresenterFragment<CategoryFragmentPres
         if (!TextUtils.isEmpty(topInfo.getBannerUrl())){
             RatioImageView bannerImg = (RatioImageView) View.inflate(mActivity,R.layout.img_category_banner,null);
             Glide.with(mActivity).load(MyConstants.BASE_URL + topInfo.getBannerUrl()).into(bannerImg);
-            lp.flexGrow = -1;
+//            lp.flexGrow = -1;
+            lp.setFlexGrow(-1);
             mFlContainer.addView(bannerImg,lp);
         }
         for (int i = 0; i < list.size(); i++) {
@@ -102,7 +104,8 @@ public class CategoryFragment extends BasePresenterFragment<CategoryFragmentPres
             title.setText(list.get(i).getName());
           /*  lp.width = FlexboxLayout.LayoutParams.MATCH_PARENT;
             lp.height = FlexboxLayout.LayoutParams.WRAP_CONTENT;*/
-            lp.flexGrow = -1;
+//            lp.flexGrow = -1;
+            lp.setFlexGrow(-1);
 //                            lp.flexBasisPercent = 1f;
             mFlContainer.addView(title, lp);
             List<SecondLevelCategoryResult.ResultBean.ThirdCategoryBean> itemList = list.get
@@ -115,9 +118,11 @@ public class CategoryFragment extends BasePresenterFragment<CategoryFragmentPres
                     lpin.flexGrow = 0;
                 }else{
                 }*/
-                lpin.alignSelf = FlexboxLayout.LayoutParams.ALIGN_SELF_FLEX_START;
+//                lpin.alignSelf = FlexboxLayout.LayoutParams.ALIGN_SELF_FLEX_START;
 //                                lpin.flexGrow = 1;
-                lpin.flexBasisPercent = 0.33f;
+                lpin.setAlignSelf(AlignSelf.FLEX_START);
+//                lpin.flexBasisPercent = 0.33f;
+                lpin.setFlexBasisPercent(0.33f);
                /* lp.flexGrow = 1;
                 lp.flexBasisPercent = 0.33f;*/
                 View view = View.inflate(mActivity, R.layout

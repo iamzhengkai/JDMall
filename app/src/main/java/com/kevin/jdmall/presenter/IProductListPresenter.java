@@ -1,5 +1,8 @@
 package com.kevin.jdmall.presenter;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Function:
  *
@@ -10,4 +13,6 @@ package com.kevin.jdmall.presenter;
 
 public interface IProductListPresenter  extends IBasePresenter{
     void getBrandInfo(int categoryId);
+    void getProductList(HashMap<String,Object> params);
+    boolean vertifyPrice(String minPriceStr, String maxPriceStr, Map<String,Integer> pricesMap);
 }

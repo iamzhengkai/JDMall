@@ -3,10 +3,12 @@ package com.kevin.jdmall.ui.fragment;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -37,15 +39,20 @@ public abstract class BaseFragment extends Fragment {
 			Bundle savedInstanceState) {
 		View view = initView();
 		mUnbinder = ButterKnife.bind(this, view);
+		bindView();
 		return view;
 	}
 
 	/**
 	 * 初始化布局
-	 * 
+	 *
 	 * @return
 	 */
 	protected abstract View initView();
+
+	protected void bindView(){
+
+	}
 
 	// Fragment所依赖的Activity创建完成
 	@Override

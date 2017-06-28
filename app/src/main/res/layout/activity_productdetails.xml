@@ -12,12 +12,13 @@
         android:background="@android:color/white" >
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="match_parent"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="4dp"
             android:src="@drawable/goback"
-            android:onClick="goBack" />
+            android:layout_centerVertical="true"
+            />
 
         <LinearLayout
             android:id="@+id/details_ll"
@@ -86,7 +87,7 @@
                 android:textSize="20sp" />
 
             <View
-                android:id="@+id/comment_tv"
+                android:id="@+id/comment_view"
                 android:layout_width="60dp"
                 android:layout_height="2dp"
                 android:background="#F33F3F"
@@ -119,7 +120,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:id="@+id/vp" />
+        android:id="@+id/vp_container" />
     <View 
         android:layout_width="match_parent"
         android:layout_height="1dp"

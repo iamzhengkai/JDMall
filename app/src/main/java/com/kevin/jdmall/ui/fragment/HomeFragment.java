@@ -212,6 +212,7 @@ public class HomeFragment extends BasePresenterFragment<HomeFragmentPresenterImp
         if (!mAutoRunSub.isUnsubscribed()) {
             mAutoRunSub.unsubscribe();
         }
+        mAutoRunSub.unsubscribe();
     }
 
     @Override

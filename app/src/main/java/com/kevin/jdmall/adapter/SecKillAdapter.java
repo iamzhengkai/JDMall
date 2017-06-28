@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.kevin.jdmall.ActivityManager;
 import com.kevin.jdmall.MyConstants;
 import com.kevin.jdmall.R;
 import com.kevin.jdmall.bean.SecKillResult;
@@ -42,6 +43,7 @@ public class SecKillAdapter extends RecyclerView.Adapter<SecKillAdapter.VH> {
     @Override
     public void onBindViewHolder(VH vh, int i) {
         SecKillResult.ResultBean.RowsBean item = mList.get(i);
+        vh.mView.setOnClickListener(v-> ActivityManager.toProductDetail(mContext,item.getProductId()));
         Glide.with(mContext).load(MyConstants.BASE_URL + item.getIconUrl()).into(vh.mImageIv);
         vh.mNowpriceTv.setText("现价:" + item.getPointPrice());
         vh.mNormalpriceTv.setText("原价:" + item.getAllPrice());
@@ -59,8 +61,10 @@ public class SecKillAdapter extends RecyclerView.Adapter<SecKillAdapter.VH> {
         TextView mNowpriceTv;
         @BindView(R.id.normalprice_tv)
         TextView mNormalpriceTv;
+        View mView;
         public VH(View view) {
             super(view);
+            mView = view;
             ButterKnife.bind(this, view);
         }
 

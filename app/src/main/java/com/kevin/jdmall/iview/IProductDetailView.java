@@ -13,7 +13,6 @@ import java.util.List;
  * @date: 2017-06-25 17:42
  */
 
-public interface IProductListView extends IView {
-    void initBrand(List<BrandResult.ResultBean> list);
-    void initProductList(List<ProductListResult.ResultBean.RowsBean> list);
+public interface IProductDetailView extends IView {
+
 }

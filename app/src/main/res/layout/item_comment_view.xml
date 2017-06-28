@@ -17,7 +17,7 @@
 
             <!-- 用户 -->
 
-            <com.loopj.android.image.SmartImageView
+            <ImageView
                 android:id="@+id/icon_iv"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
@@ -44,9 +44,15 @@
             android:layout_height="1dp"
             android:background="#8888" />
 
-        <include
+      <!--  <include
             android:id="@+id/rating_bar"
-            layout="@layout/rating_bar_view" />
+            layout="@layout/rating_bar_view" />-->
+        <android.support.v7.widget.AppCompatRatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/roomRatingBar"
+            android:isIndicator="true"
+            />
 
         <TextView
             android:id="@+id/content_tv"
@@ -64,21 +70,21 @@
             android:layout_marginRight="20dp"
             android:orientation="horizontal"
             android:visibility="gone" >
-            <com.loopj.android.image.SmartImageView 
+            <ImageView 
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent"  />
-            <com.loopj.android.image.SmartImageView 
+            <ImageView 
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_marginLeft="5dp"
                 android:layout_height="match_parent" />
-            <com.loopj.android.image.SmartImageView 
+            <ImageView 
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_marginLeft="5dp"
                 android:layout_height="match_parent" />
-            <com.loopj.android.image.SmartImageView 
+            <ImageView 
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_marginLeft="5dp"

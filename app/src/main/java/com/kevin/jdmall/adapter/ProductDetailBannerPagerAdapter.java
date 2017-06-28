@@ -9,6 +9,7 @@ import com.kevin.jdmall.MyConstants;
 import com.kevin.jdmall.R;
 import com.kevin.jdmall.bean.BannerResult;
 import com.kevin.jdmall.ui.view.RatioImageView;
+import com.orhanobut.logger.Logger;
 
 import java.util.List;
 
@@ -20,28 +21,21 @@ import java.util.List;
  * @date: 2017-06-23 20:52
  */
 
-public class HomeBannerAdapter extends BasePagerAdapter<BannerResult.ResultBean> {
+public class ProductDetailBannerPagerAdapter extends BasePagerAdapter<String> {
     private Context mContext;
 
-    public HomeBannerAdapter(List<BannerResult.ResultBean> list, Context context) {
+    public ProductDetailBannerPagerAdapter(List<String> list, Context context) {
         super(list);
         mContext = context;
     }
 
     @Override
-    public int getCount() {
-        return Integer.MAX_VALUE;
-    }
-
-    @Override
     public Object instantiateItem(ViewGroup container, int position) {
         RatioImageView ratioImageView = (RatioImageView) View.inflate(mContext, R.layout
-                .item_img_home_banner, null);
-        //if (mList.size() > 0) {
-            int realPosition = position % mList.size();
-            String imageUrl = MyConstants.BASE_URL + mList.get(realPosition).getAdUrl();
-            Glide.with(mContext).load(imageUrl).into(ratioImageView);
-        //}
+                .item_img_product_detail_banner, null);
+        String imageUrl = MyConstants.BASE_URL + mList.get(position);
+        Logger.e("imageUrl====>" + imageUrl);
+        Glide.with(mContext).load(imageUrl).into(ratioImageView);
         container.addView(ratioImageView);
         return ratioImageView;
     }

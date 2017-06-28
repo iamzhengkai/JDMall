@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.m520it.jdmall.view.ObservableScrollView
+    <!--<com.m520it.jdmall.view.ObservableScrollView-->
+    <ScrollView
         android:id="@+id/scrollview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,11 +21,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="360dp" >
 
-                <android.support.v4.view.ViewPager
-                    android:id="@+id/asvp"
+                <com.kevin.jdmall.ui.view.RatioViewPager
+                    android:id="@+id/vp_ad"
                     android:layout_width="match_parent"
-                    android:layout_height="320dp"
-                    android:scaleType="fitCenter" />
+                    android:layout_height="wrap_content"
+                    app:pagerRatio="1"
+                    />
 
                 <TextView
                     android:id="@+id/vp_indic_tv"
@@ -201,14 +204,15 @@
                         android:textColor="#797D88"
                         android:textSize="16sp" />
 
-                    <GridView
+                    <android.support.v7.widget.RecyclerView
                         android:id="@+id/product_versions_gv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="6dp"
                         android:layout_marginTop="-5dp"
-                        android:orientation="vertical"
-                        android:verticalSpacing="5dp" />
+                        android:overScrollMode="never"
+                        android:scrollbars="none"
+                        />
                 </LinearLayout>
 
                 <LinearLayout
@@ -224,12 +228,20 @@
                         android:textColor="#797D88"
                         android:textSize="16sp" />
 
-                    <include
+                    <!--<include
                         android:id="@+id/number_input_et"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="6dp"
-                        layout="@layout/number_input_et" />
+                        layout="@layout/number_input_et" />-->
+                    <com.kevin.jdmall.ui.view.NumberInputView
+                        android:id="@+id/numer_input"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:maxValue="10"
+                        >
+
+                    </com.kevin.jdmall.ui.view.NumberInputView>
                 </LinearLayout>
             </LinearLayout>
 
@@ -277,16 +289,15 @@
                 android:layout_height="1dp"
                 android:background="#E8E8E8" />
 
-            <ListView
-                android:id="@+id/good_comment_lv"
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_good_comment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
-                android:layout_marginTop="3dp"
-                android:cacheColorHint="#0000"
-                android:listSelector="#0000" />
+                android:layout_marginTop="3dp"/>
         </LinearLayout>
-    </com.m520it.jdmall.view.ObservableScrollView>
+    </ScrollView>
+    <!--</com.m520it.jdmall.view.ObservableScrollView>-->
 
     <TextView
         android:id="@+id/scroll_to_top_indic"

@@ -8,4 +8,8 @@
     <declare-styleable name="RatioViewPager">
         <attr name="pagerRatio" format="float"/>
     </declare-styleable>
+
+    <declare-styleable name="NumberInputView">
+        <attr name="maxValue" format="integer"/>
+    </declare-styleable>
 </resources>

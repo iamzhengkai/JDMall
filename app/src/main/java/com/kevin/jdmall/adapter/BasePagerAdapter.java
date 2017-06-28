@@ -17,7 +17,7 @@ public class BasePagerAdapter<T> extends PagerAdapter{
 
 	@Override
 	public int getCount() {
-		return Integer.MAX_VALUE;
+		return mList.size();
 	}
 
 	@Override

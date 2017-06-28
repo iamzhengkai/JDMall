@@ -40,6 +40,7 @@ public class RestfulInterceptor implements Interceptor {
                 Logger.d("content===============>" + content);
             }
         } catch (JSONException e) {
+            Logger.e("json parse error:" + e.getMessage());
             e.printStackTrace();
         }
         Logger.d(content);

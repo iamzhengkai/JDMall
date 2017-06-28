@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
+import com.kevin.jdmall.ui.activity.ProductDetailActivity;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,5 +41,11 @@ public class ActivityManager {
         context.startActivity(intent);
         if (isFinishSelf && context instanceof Activity)
             ((Activity)context).finish();
+    }
+
+    public static void toProductDetail(Context context,int productId){
+        Intent intent = new Intent(context,ProductDetailActivity.class);
+        intent.putExtra(MyConstants.EXTRA_PRODUCT_DETAIL_ID,productId);
+        context.startActivity(intent);
     }
 }

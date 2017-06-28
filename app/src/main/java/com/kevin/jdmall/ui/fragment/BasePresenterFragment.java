@@ -15,14 +15,6 @@ import com.kevin.jdmall.presenter.impl.BasePresenterImpl;
 
 public abstract class BasePresenterFragment<T extends BasePresenterImpl> extends BaseFragment {
     protected T mPresenter;
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        //TODO 确定是否能够在此处进行初始化
-//        mPresenter = initPresenter();
-    }
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         mPresenter = initPresenter();

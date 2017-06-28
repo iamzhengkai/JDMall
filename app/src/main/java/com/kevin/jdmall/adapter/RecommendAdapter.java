@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.kevin.jdmall.ActivityManager;
 import com.kevin.jdmall.MyConstants;
 import com.kevin.jdmall.R;
 import com.kevin.jdmall.bean.RecommendResult;
@@ -43,6 +44,7 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.VH> 
     @Override
     public void onBindViewHolder(VH vh, int i) {
         RecommendResult.ResultBean.RowsBean item = mList.get(i);
+        vh.mView.setOnClickListener(v -> ActivityManager.toProductDetail(mContext,item.getProductId()));
         Glide.with(mContext).load(MyConstants.BASE_URL + item.getIconUrl()).into(vh.mImageIv);
         vh.mNameTv.setText(item.getName());
         vh.mPriceTv.setText("" + item.getPrice());
@@ -61,9 +63,11 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.VH> 
         TextView mNameTv;
         @BindView(R.id.price_tv)
         TextView mPriceTv;
+        View mView;
 
         public VH(View view) {
             super(view);
+            mView = view;
             ButterKnife.bind(this, view);
         }
 

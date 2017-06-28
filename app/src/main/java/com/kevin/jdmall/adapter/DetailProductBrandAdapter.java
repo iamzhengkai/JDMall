@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.kevin.jdmall.R;
@@ -23,14 +22,14 @@ import butterknife.ButterKnife;
  * @date: 2017-06-24 21:02
  */
 
-public class BrandAdapter extends RecyclerView.Adapter<BrandAdapter.VH> {
+public class DetailProductBrandAdapter extends RecyclerView.Adapter<DetailProductBrandAdapter.VH> {
 
     private int mPosition = -1;
-    private List<BrandResult.ResultBean> mList;
+    private List<String> mList;
     private Context mContext;
     private OnItemClickListener mOnItemClickListener;
 
-    public BrandAdapter(Context context, List<BrandResult.ResultBean> list) {
+    public DetailProductBrandAdapter(Context context, List<String> list) {
         mList = list;
         mContext = context;
     }
@@ -42,8 +41,7 @@ public class BrandAdapter extends RecyclerView.Adapter<BrandAdapter.VH> {
 
     @Override
     public void onBindViewHolder(VH vh, int i) {
-        BrandResult.ResultBean item = mList.get(i);
-        vh.mBrandTv.setText(item.getName());
+        vh.mBrandTv.setText(mList.get(i));
 //        vh.mBrandTv.setTag(true);
         vh.mBrandTv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,9 +53,9 @@ public class BrandAdapter extends RecyclerView.Adapter<BrandAdapter.VH> {
                     mPosition = -1;
                 }
                 notifyDataSetChanged();
-                if (mOnItemClickListener != null){
+                /*if (mOnItemClickListener != null){
                     mOnItemClickListener.onItemClick(vh.mBrandTv,i,mList.get(i));
-                }
+                }*/
             }
         });
 
@@ -88,7 +86,7 @@ public class BrandAdapter extends RecyclerView.Adapter<BrandAdapter.VH> {
     }
 
     public interface OnItemClickListener{
-        void onItemClick(View view,int position,BrandResult.ResultBean item);
+        void onItemClick(View view, int position, BrandResult.ResultBean item);
     }
 
 }
