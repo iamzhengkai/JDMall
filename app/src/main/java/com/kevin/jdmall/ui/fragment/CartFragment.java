@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.kevin.jdmall.R;
 import com.kevin.jdmall.presenter.impl.BasePresenterImpl;
 
 /**
@@ -15,13 +16,18 @@ import com.kevin.jdmall.presenter.impl.BasePresenterImpl;
 public class CartFragment extends BasePresenterFragment {
     @Override
     protected View initView() {
-        TextView view = new TextView(getActivity());
-        view.setText("购物车");
+       View view = View.inflate(mActivity, R.layout.fragment_shopcar,null);
         return view;
     }
 
     @Override
     protected BasePresenterImpl initPresenter() {
         return null;
+    }
+
+    @Override
+    protected void bindView() {
+
+
     }
 }

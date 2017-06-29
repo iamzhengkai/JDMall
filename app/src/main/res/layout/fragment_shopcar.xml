@@ -18,15 +18,11 @@
         android:layout_height="1dp"
         android:background="#F444" />
 
-    <com.m520it.jdmall.ui.FlexiListView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/shopcar_lv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:cacheColorHint="#0000"
-        android:divider="@null"
-        android:dividerHeight="8dp"
-        android:listSelector="#0000"
         android:scrollbars="none" />
     
     <include

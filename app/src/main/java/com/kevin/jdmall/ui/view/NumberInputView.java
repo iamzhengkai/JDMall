@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 
 import com.kevin.jdmall.R;
+import com.kevin.jdmall.utils.DensityUtil;
 import com.kevin.jdmall.utils.ToastUtil;
 
 import butterknife.BindView;
@@ -33,6 +34,7 @@ public class NumberInputView extends FrameLayout {
     private View mView;
     private onPlusClickListener mOnPlusClickListener;
     private onMinusClickListener mOnMinusClickListener;
+    private onNumberChangeListener mOnNumberChangeListener;
     private int mMax = Integer.MAX_VALUE;
     private TextWatcher mWatcher;
 
@@ -79,7 +81,9 @@ public class NumberInputView extends FrameLayout {
                 if (Integer.valueOf(s.toString()) > mMax){
                     ToastUtil.showToast("已达最大值，最大值为:" + mMax);
                     mEtNum.setText("" + mMax);
+                    return;
                 }
+                mOnNumberChangeListener.onNumberChanged(NumberInputView.this,getResult());
             }
 
             @Override
@@ -140,12 +144,19 @@ public class NumberInputView extends FrameLayout {
         void onMinusClick(View view);
     }
 
+    public interface onNumberChangeListener{
+        void onNumberChanged(View view,int num);
+    }
+
     public void setOnPlusClickListener(onPlusClickListener onPlusClickListener) {
         mOnPlusClickListener = onPlusClickListener;
     }
 
     public void setOnMinusClickListener(onMinusClickListener onMinusClickListener) {
         mOnMinusClickListener = onMinusClickListener;
+    }
+    public void setOnNumberChangeListener(onNumberChangeListener onNumberChangeListener) {
+        mOnNumberChangeListener = onNumberChangeListener;
     }
 
     public int getResult(){
@@ -154,5 +165,20 @@ public class NumberInputView extends FrameLayout {
 
     public void setMax(int max) {
         mMax = max;
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        int widthMode = MeasureSpec.getMode(widthMeasureSpec);
+        int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+
+        int minWidthSize = DensityUtil.dp2px(getContext(),100);
+        if (widthMode == MeasureSpec.AT_MOST){
+            setMeasuredDimension(minWidthSize,heightSize);
+        }
+
+
+
     }
 }
