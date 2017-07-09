@@ -4,13 +4,13 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.view.View;
+import android.view.MotionEvent;
 
 import com.kevin.jdmall.R;
 
 public class RatioViewPager extends ViewPager {
     private float mRatio;
-
+    private OnFingerUpDownListener mUpDownListener;
     public RatioViewPager(Context context) {
         super(context);
     }
@@ -32,4 +32,35 @@ public class RatioViewPager extends ViewPager {
         }
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
+
+    //Override dispatchTouchEvent to do sth before dispatch any touch event
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        //do sth before dispatch event
+        switch (ev.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                if (mUpDownListener != null) {
+                    mUpDownListener.onFingerDown();
+                }
+                break;
+            case MotionEvent.ACTION_UP:
+                if (mUpDownListener != null) {
+                    mUpDownListener.onFingerUp();
+                }
+                break;
+            default:
+                break;
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+
+    public void setOnFingerUpDownListener(OnFingerUpDownListener l){
+        mUpDownListener = l;
+    }
+
+    public interface OnFingerUpDownListener{
+        void onFingerDown();
+        void onFingerUp();
+    }
+
 }

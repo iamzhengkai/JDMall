@@ -9,6 +9,7 @@ import com.kevin.jdmall.MyConstants;
 import com.kevin.jdmall.R;
 import com.kevin.jdmall.bean.BannerResult;
 import com.kevin.jdmall.ui.view.RatioImageView;
+import com.kevin.jdmall.utils.ToastUtil;
 
 import java.util.List;
 
@@ -42,6 +43,12 @@ public class HomeBannerAdapter extends BasePagerAdapter<BannerResult.ResultBean>
             String imageUrl = MyConstants.BASE_URL + mList.get(realPosition).getAdUrl();
             Glide.with(mContext).load(imageUrl).into(ratioImageView);
         //}
+        //1.problem: after the onClickListener was setted, some conflicts occurred with the ViewPagers onTouchListener
+        //2.solution:you should override dispatchTouchEvent method in RatioViewPager if you want to do sth before
+        //you dispatch touch event
+        ratioImageView.setOnClickListener(v -> {
+            ToastUtil.showToast("你点击了第 " + realPosition + "项！");
+        });
         container.addView(ratioImageView);
         return ratioImageView;
     }

@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -23,6 +24,7 @@ import com.kevin.jdmall.bean.SecKillResult;
 import com.kevin.jdmall.iview.IHomeFragmentView;
 import com.kevin.jdmall.presenter.impl.HomeFragmentPresenterImpl;
 import com.kevin.jdmall.ui.view.RatioImageView;
+import com.kevin.jdmall.ui.view.RatioViewPager;
 import com.kevin.jdmall.utils.DensityUtil;
 import com.orhanobut.logger.Logger;
 
@@ -44,7 +46,7 @@ import rx.schedulers.Schedulers;
 public class HomeFragment extends BasePresenterFragment<HomeFragmentPresenterImpl> implements
         IHomeFragmentView {
     @BindView(R.id.ad_vp)
-    ViewPager mAdVp;
+    RatioViewPager mAdVp;
     @BindView(R.id.ad_indicator)
     LinearLayout mAdIndicator;
     @BindView(R.id.ad2_iv)
@@ -241,7 +243,40 @@ public class HomeFragment extends BasePresenterFragment<HomeFragmentPresenterImp
         stopAutoRun();
     }
 
-  /*  @Override
+    @Override
+    protected void bindView() {
+        //didn't work,conflicts with item onClickListener
+        /*mAdVp.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()){
+                    case MotionEvent.ACTION_DOWN:
+                        stopAutoRun();
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        autoRun();
+//                        return true;
+                        break;
+                }
+                return false;
+            }
+        });*/
+
+        mAdVp.setOnFingerUpDownListener(new RatioViewPager.OnFingerUpDownListener() {
+            @Override
+            public void onFingerDown() {
+                stopAutoRun();
+            }
+
+            @Override
+            public void onFingerUp() {
+                autoRun();
+            }
+        });
+
+    }
+
+    /*  @Override
     public void onDestroy() {
         super.onDestroy();
         Logger.e("=============>onDestroy");
