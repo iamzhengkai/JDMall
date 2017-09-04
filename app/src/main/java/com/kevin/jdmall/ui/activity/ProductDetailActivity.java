@@ -1,19 +1,25 @@
 package com.kevin.jdmall.ui.activity;
 
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.widget.Adapter;
 
+import com.kevin.jdmall.MyApplication;
 import com.kevin.jdmall.MyConstants;
 import com.kevin.jdmall.R;
 import com.kevin.jdmall.adapter.ProductDetailPagerAdapter;
 import com.kevin.jdmall.iview.IProductDetailView;
 import com.kevin.jdmall.presenter.impl.ProductDetailPresenterImpl;
+import com.kevin.jdmall.ui.fragment.ProductDetailProductFragment;
 import com.kevin.jdmall.ui.fragment.factory.ProductDetailFragmentFactory;
 import com.kevin.jdmall.utils.ToastUtil;
 import com.orhanobut.logger.Logger;
 
+import java.util.HashMap;
+
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class ProductDetailActivity extends
@@ -29,6 +35,7 @@ public class ProductDetailActivity extends
     ViewPager mVpContainer;
     private ProductDetailPagerAdapter mContainerPagarAdpter;
     public int mProductId;
+
 
     @Override
     protected ProductDetailPresenterImpl initPresenter() {
@@ -46,18 +53,20 @@ public class ProductDetailActivity extends
         if (mProductId == 0) {
             Logger.e("获取产品id失败");
             ToastUtil.showToast("获取产品id失败");
+            throw new IllegalStateException("Failed to get product id!");
         }
         mContainerPagarAdpter = new ProductDetailPagerAdapter(getSupportFragmentManager());
         mVpContainer.setAdapter(mContainerPagarAdpter);
         mVpContainer.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            public void onPageScrolled(int position, float positionOffset, int
+                    positionOffsetPixels) {
             }
 
             @Override
             public void onPageSelected(int position) {
                 hideAllIndicators();
-                switch (position){
+                switch (position) {
                     case 0:
                         mIntroduceView.setVisibility(View.VISIBLE);
                         break;
@@ -69,6 +78,7 @@ public class ProductDetailActivity extends
                         break;
                 }
             }
+
             @Override
             public void onPageScrollStateChanged(int state) {
             }
@@ -105,5 +115,25 @@ public class ProductDetailActivity extends
         super.onDestroy();
         //避免内存泄漏
         ProductDetailFragmentFactory.clearFragment();
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
+
+    @OnClick(R.id.add2shopcar)
+    public void onViewClicked() {
+        //1.get params
+        HashMap<String,Object> params = new HashMap<>();
+        ProductDetailProductFragment detailFragment =
+                (ProductDetailProductFragment) mContainerPagarAdpter.getItem(0);
+        mPresenter.initParams(MyApplication.userId,mProductId,
+                detailFragment.getProductCount(),params);
+        //2.send request
+        mPresenter.add2Cart(params);
+        //3.show toast
     }
 }

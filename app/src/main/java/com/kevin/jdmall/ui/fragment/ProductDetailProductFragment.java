@@ -1,9 +1,12 @@
 package com.kevin.jdmall.ui.fragment;
 
+import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -19,12 +22,15 @@ import com.kevin.jdmall.bean.ProductCommentResult;
 import com.kevin.jdmall.iview.IDetailProductView;
 import com.kevin.jdmall.presenter.impl.DetailProductFragmentPresenterImpl;
 import com.kevin.jdmall.ui.activity.ProductDetailActivity;
+import com.kevin.jdmall.ui.view.NumberInputView;
 import com.orhanobut.logger.Logger;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Function:
@@ -66,8 +72,12 @@ public class ProductDetailProductFragment extends
     ScrollView mScrollview;
     @BindView(R.id.scroll_to_top_indic)
     TextView mScrollToTopIndic;
+    @BindView(R.id.numer_input)
+    NumberInputView mNumerInput;
+    Unbinder unbinder;
     private ProductDetailBannerPagerAdapter mMainAdapter;
     private DetailProductCommentAdapter mCommentAdapter;
+    private DetailProductBrandAdapter mProductBrandAdapter;
 
     @Override
     protected View initView() {
@@ -83,14 +93,15 @@ public class ProductDetailProductFragment extends
         mProductVersionsGv.setLayoutManager(flexboxLayoutManager);
         mRvGoodComment.setLayoutManager(new LinearLayoutManager(mActivity));
         mRvGoodComment.setNestedScrollingEnabled(false);
-        mRvGoodComment.addItemDecoration(new HorizontalDividerItemDecoration.Builder(mActivity).build());
+        mRvGoodComment.addItemDecoration(new HorizontalDividerItemDecoration.Builder(mActivity)
+                .build());
     }
 
     @Override
     public void initData() {
         int productId = ((ProductDetailActivity) mActivity).mProductId;
         mPresenter.getProduct(productId);
-        mPresenter.getProductComment(productId,1);
+        mPresenter.getProductComment(productId, 1);
     }
 
     @Override
@@ -124,18 +135,29 @@ public class ProductDetailProductFragment extends
         });
         mNameTv.setText(result.getResult().getName());
 
-        if (result.getResult().isIfSaleOneself()){
+        if (result.getResult().isIfSaleOneself()) {
             mSelfSaleTv.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             mSelfSaleTv.setVisibility(View.INVISIBLE);
         }
         mDescTv.setText(result.getResult().getRecomProduct());
         mPriceTv.setText("" + result.getResult().getPrice());
         mGoodRateTv.setText(result.getResult().getFavcomRate() + "%好评");
         mGoodCommentTv.setText(result.getResult().getCommentCount() + "人评价");
-        mProductVersionsGv.setAdapter(new DetailProductBrandAdapter(mActivity,result.getResult().getTypeList()));
+        mProductBrandAdapter = new DetailProductBrandAdapter(mActivity, result.getResult()
+                .getTypeList());
+        mProductVersionsGv.setAdapter(mProductBrandAdapter);
 
     }
+
+    public int getProductCount(){
+        return mNumerInput.getResult();
+    }
+
+    public String getSelectedBrand(){
+        return mProductBrandAdapter.getSelectedBrand();
+    }
+
 
     @Override
     public void bindCommentList(ProductCommentResult result) {
@@ -143,4 +165,18 @@ public class ProductDetailProductFragment extends
         mRvGoodComment.setAdapter(mCommentAdapter);
     }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
+            savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        unbinder = ButterKnife.bind(this, rootView);
+        return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
 }

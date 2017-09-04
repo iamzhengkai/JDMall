@@ -89,4 +89,12 @@ public class DetailProductBrandAdapter extends RecyclerView.Adapter<DetailProduc
         void onItemClick(View view, int position, BrandResult.ResultBean item);
     }
 
+    public String getSelectedBrand(){
+        if (mPosition == -1){
+            return null;
+        }else{
+            return mList.get(mPosition);
+        }
+    }
+
 }

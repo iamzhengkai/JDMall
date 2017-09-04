@@ -54,18 +54,18 @@ public class LoginResult {
          * userLevel : 用户等级（1注册会员2铜牌会员3银牌会员4金牌会员5钻石会员）
          */
 
-        private String id;
+        private int id;
         private String userName;
         private String userIcon;
         private String waitPayCount;
         private String waitReceiveCount;
         private String userLevel;
 
-        public String getId() {
+        public int getId() {
             return id;
         }
 
-        public void setId(String id) {
+        public void setId(int id) {
             this.id = id;
         }
 

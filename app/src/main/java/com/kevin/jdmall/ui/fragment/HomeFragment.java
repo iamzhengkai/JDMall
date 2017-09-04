@@ -1,14 +1,10 @@
 package com.kevin.jdmall.ui.fragment;
 
-import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -139,6 +135,15 @@ public class HomeFragment extends BasePresenterFragment<HomeFragmentPresenterImp
 
             @Override
             public void onPageScrollStateChanged(int state) {
+                // stop auto play when user switch page
+              /*  switch (state){
+                    case ViewPager.SCROLL_STATE_DRAGGING:
+                        stopAutoRun();
+                        break;
+                    case ViewPager.SCROLL_STATE_IDLE:
+                        autoRun();
+                        break;
+                }*/
 
             }
         });
@@ -246,7 +251,7 @@ public class HomeFragment extends BasePresenterFragment<HomeFragmentPresenterImp
     @Override
     protected void bindView() {
         //didn't work,conflicts with item onClickListener
-        /*mAdVp.setOnTouchListener(new View.OnTouchListener() {
+       /* mAdVp.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()){
@@ -256,9 +261,10 @@ public class HomeFragment extends BasePresenterFragment<HomeFragmentPresenterImp
                     case MotionEvent.ACTION_UP:
                         autoRun();
 //                        return true;
+//                        v.performClick();
                         break;
                 }
-                return false;
+                return true;
             }
         });*/
 

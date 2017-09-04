@@ -20,6 +20,7 @@ import retrofit2.Retrofit;
 public class MyApplication extends Application {
     public static Context mContext;
     public static Retrofit mRetrofit;
+    public static int userId = -1;
     public static RefWatcher mRefWatcher;
 
     @Override

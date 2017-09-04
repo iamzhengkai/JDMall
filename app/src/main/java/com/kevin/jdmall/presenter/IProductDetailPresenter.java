@@ -12,4 +12,5 @@ import java.util.Map;
  */
 
 public interface IProductDetailPresenter extends IBasePresenter{
+    boolean initParams(int userId,int productId,int buyCount,HashMap<String,Object> params) ;
 }

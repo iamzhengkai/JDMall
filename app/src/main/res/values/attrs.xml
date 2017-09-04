@@ -11,5 +11,7 @@
 
     <declare-styleable name="NumberInputView">
         <attr name="maxValue" format="integer"/>
+        <attr name="value" format="integer"/>
     </declare-styleable>
+
 </resources>

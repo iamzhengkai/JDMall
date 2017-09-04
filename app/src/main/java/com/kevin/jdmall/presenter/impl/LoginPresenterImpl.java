@@ -38,22 +38,17 @@ public class LoginPresenterImpl extends BasePresenterImpl<ILoginView> implements
         mViewRef.get().showProgressDialog();
         Subscription sLogin = MyApplication.mRetrofit.create(LoginApi.class).login(username,
                 password)
-                .map(new Func1<LoginResult, String>() {
+                .map(new Func1<LoginResult, Integer>() {
                     @Override
-                    public String call(LoginResult loginResult) {
-                        //登录成功将登录信息转换成json串
-                        return JsonUtil.parseObjToJson(loginResult.getResult());
-                    }
-                })
-                .map(new Func1<String, Integer>() {
-                    @Override
-                    public Integer call(String s) {
+                    public Integer call(LoginResult loginResult) {
                         //将用户信息保存到数据库，并将登录结果保存到sharedPreference，同时将结果转成数字
+                        String s = JsonUtil.parseObjToJson(loginResult.getResult());
                         UserDao userDao = new UserDao();
                         userDao.clearUser();
                         boolean dbResult = userDao.addUser(username, password);
                         boolean prfResult = PrefUtils.setString(MyConstants.PREF_USER_INFO, s);
                         if (dbResult && prfResult) {
+                            MyApplication.userId = loginResult.getResult().getId();
                             return 0;
                         } else {
                             //数据库错误
